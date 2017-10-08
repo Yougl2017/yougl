@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a1d0edd-ac2a-49d9-824f-f59fde18f6f2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="name" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<field name="dname" class="java.lang.String"/>
+	<field name="gg" class="java.lang.String"/>
+	<field name="sl" class="java.lang.String"/>
+	<field name="dw" class="java.lang.String"/>
+	<field name="dj" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="139" splitType="Stretch">
+			<rectangle>
+				<reportElement x="27" y="118" width="124" height="20" uuid="7838d5cb-480a-4127-b0a2-9917d5e4725c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="151" y="118" width="124" height="20" uuid="a03e996d-1325-4229-9429-37ddc4e3fd62"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="51" y="121" width="56" height="15" uuid="2eb70add-a10e-4a9b-9e6f-a49f7b6c12ba"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[商品名称]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="275" y="118" width="47" height="20" uuid="6cf047ce-ffc1-4069-88eb-34781e48d263"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="281" y="120" width="37" height="18" uuid="de1cfbe2-ab72-409a-80f9-76292190a41d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[数量]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="120" width="124" height="18" uuid="cf7aaab4-70c2-46c3-ba20-96fa1e5da817"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[规格]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="318" y="118" width="62" height="20" uuid="b7c91347-6707-42fd-a411-1e074f5b8af2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="333" y="120" width="37" height="18" uuid="73d0b8ce-636e-4fff-8379-71f908baad74"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[单位]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="380" y="118" width="62" height="20" uuid="94987e26-d671-4d7e-8f10-79adacf9baa1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="440" y="118" width="62" height="20" uuid="e2093a99-000d-4b58-86f9-9f9ec85847d6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="502" y="118" width="218" height="20" uuid="e0362ce9-de32-4330-90e3-5bd1b8c72ca5"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="392" y="120" width="37" height="18" uuid="04943104-24ba-4376-9325-e0200c820285"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[单价]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="121" width="37" height="17" uuid="50edb995-6544-4d9e-92db-a3857f4ac9b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[总金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="587" y="118" width="37" height="18" uuid="16e12229-cb0b-4544-add4-1292ae69ac6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[备注]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="55" width="269" height="20" uuid="3a618df5-9a8a-4ac5-b7e1-1ed1d90c71c3"/>
+				<text><![CDATA[地址：深圳市龙华工业路龙胜工业区11栋102]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="75" width="693" height="20" uuid="ea1a3875-19d1-49c1-976b-7183f5449d43"/>
+				<text><![CDATA[电话：0755-29587633      传真：075529587633     QQ：2558578381                                                                公众号：深圳市环华玻璃工艺加工厂]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="95" width="37" height="20" uuid="ab5b8a93-222f-432f-8aee-3227578e10d2"/>
+				<text><![CDATA[客户：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="95" width="52" height="20" uuid="6f223e40-cbaf-417c-9bf1-54ee0980bb8c"/>
+				<text><![CDATA[联系电话：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="95" width="43" height="20" uuid="2638309c-1542-48ab-9207-a73582f39a8b"/>
+				<text><![CDATA[联系人：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="511" y="55" width="33" height="20" uuid="be758605-6142-48bd-9776-9debf0e131b9"/>
+				<text><![CDATA[单号：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="0" width="693" height="38" uuid="fb98e688-830e-483d-be9f-0f97253fa97d"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[环华玻璃订货单]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="27" y="0" width="124" height="20" uuid="3327a02e-2f71-42e4-b52e-af118078b09a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="151" y="0" width="124" height="20" uuid="6dffac46-354c-4539-81d3-039c86e9d270"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="275" y="0" width="43" height="20" uuid="fa54bd08-290b-4e94-acdd-08dfaac93d89"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="318" y="0" width="62" height="20" uuid="946ed0d8-ffff-4dae-8148-53c90cf50848"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="380" y="0" width="60" height="20" uuid="7df660e6-be86-4fca-8424-6b38cd3ed150"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="440" y="0" width="62" height="20" uuid="2db53109-f03b-488f-ad85-8292ba3688cb"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="502" y="0" width="218" height="20" uuid="e1c7982e-5c5b-472c-ad32-e60d5dc87c71"/>
+			</rectangle>
+			<textField>
+				<reportElement x="281" y="0" width="26" height="20" uuid="4e8ae9c7-caeb-4dc8-8134-bfad014f78d4"/>
+				<textFieldExpression><![CDATA[$F{sl}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="0" width="32" height="20" uuid="9113001b-57aa-4d33-9b01-c0c28c116ab3"/>
+				<textFieldExpression><![CDATA[$F{dw}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="0" width="37" height="20" uuid="36c511e0-1cf4-41f4-9500-08b5460138d8"/>
+				<textFieldExpression><![CDATA[$F{dj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="0" width="100" height="20" uuid="c9a41a12-e22a-4036-abce-b6b8f825ac3b"/>
+				<textFieldExpression><![CDATA[$F{gg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="0" width="67" height="20" uuid="31389f08-cf50-4725-b4ae-9b2e44479771"/>
+				<textFieldExpression><![CDATA[$F{dname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="29" splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="169" splitType="Stretch">
+			<rectangle>
+				<reportElement x="27" y="36" width="693" height="90" uuid="c3723efa-741d-48af-a688-9356ebd5fb7e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="36" width="660" height="20" uuid="f86c4b93-79e9-47f4-b27d-6506ee4b3e52"/>
+				<text><![CDATA[1.本订单的玻璃尺寸允许误差±2mm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="56" width="660" height="20" uuid="423e0714-e63e-497a-8438-b94f8473016a"/>
+				<text><![CDATA[2.电话报单，如规格有误本厂概不负责]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="76" width="660" height="20" uuid="d7f85965-437b-4734-860b-c21588c3ce2b"/>
+				<text><![CDATA[3.包料来料、中空、夹胶玻璃、每块不足0.3㎡的按0.3㎡计算]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="96" width="660" height="20" uuid="76de754c-274c-4df5-bdea-766e84290789"/>
+				<text><![CDATA[4.客户收货时玻璃有质量问题，应在两日内回本厂反馈]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="27" y="0" width="124" height="36" uuid="9ba03dcf-15f3-42b0-8c50-efd8e4a22a81"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="9" width="100" height="20" uuid="38143ec5-59cf-47b6-a4de-b8684fb5b9a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[合计：]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="151" y="0" width="289" height="36" uuid="23b5c077-05cd-46cc-9908-4a5cf55ef529"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="440" y="0" width="62" height="36" uuid="a2319b51-e86c-4aa9-ba26-373da8f1c5b1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="502" y="0" width="218" height="36" uuid="bdc7da66-8bba-4e87-95db-d3a2ca47e0f7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="40" y="132" width="44" height="20" uuid="a4622ea5-f516-467f-86a7-ea7de835ba0d"/>
+				<text><![CDATA[制单人：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="132" width="51" height="20" uuid="507a872c-549c-4889-b508-e78cb5ac0345"/>
+				<text><![CDATA[客户确认：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="559" y="132" width="42" height="20" uuid="22c033e5-3d5a-48a2-ab84-ca649830c140"/>
+				<text><![CDATA[收货人：]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
