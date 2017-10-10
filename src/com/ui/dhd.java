@@ -975,12 +975,12 @@ public class dhd extends JFrame implements KeyShortcut {
 			    	JasperReport jasperReport=JasperCompileManager.compileReport(jasperDesign);
 			    	HashMap p=new HashMap();
 			    	p.put("name", "郑泽游");
-			    	JRResultSetDataSource rsd= new JRResultSetDataSource(Dao.query("select * from temp_sale_detail"));
+			    	JRResultSetDataSource rsd= new JRResultSetDataSource(Dao.query("select * from temp_sale_detail where zblsh='"+(String)text_slh.getText()+"'"));
 			    	JasperPrint  jasperprint=JasperFillManager.fillReport(jasperReport, p,rsd);
 			    	JasperViewer  jr=new JasperViewer (jasperprint,false);
 			    	jr.setVisible(true);
 			    	jr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
-			    	
+			    	clearGoods();
 			
 				} catch (JRException e1) {
 					// TODO: handle exception
@@ -1072,6 +1072,11 @@ public class dhd extends JFrame implements KeyShortcut {
     }
     //清空商品信息
     public void clearGoods(){
+    	datetime();
+    	lshmaxid();
+    	detailId();
+    	comboBox_company.setSelectedIndex(-1);
+    	comboBox_product.setSelectedIndex(-1);
     	
     }
 }
