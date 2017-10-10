@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class Sale implements java.io.Serializable {
 
-	private Serializable lsh;
+	private String lsh;
 	private String sgs;
 	private String name;
 	private String sphone;
@@ -30,13 +30,13 @@ public class Sale implements java.io.Serializable {
 	public Sale() {
 	}
 
-	public Sale(Serializable lsh, String name, String sphone) {
+	public Sale(String lsh, String name, String sphone) {
 		this.lsh = lsh;
 		this.name = name;
 		this.sphone = sphone;
 	}
 
-	public Sale(Serializable lsh, String sgs, String name, String sphone, String address, String zffs, String jszt,
+	public Sale(String lsh, String sgs, String name, String sphone, String address, String zffs, String jszt,
 			Date jssj, Date dhsj, BigDecimal zje, BigDecimal srje, BigDecimal yhje, String czyh, String tlsh,
 			String bz) {
 		this.lsh = lsh;
@@ -57,11 +57,11 @@ public class Sale implements java.io.Serializable {
 	}
 
 
-	public Serializable getLsh() {
+	public String getLsh() {
 		return this.lsh;
 	}
 
-	public void setLsh(Serializable lsh) {
+	public void setLsh(String lsh) {
 		this.lsh = lsh;
 	}
 

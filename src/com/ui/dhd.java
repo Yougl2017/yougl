@@ -1075,7 +1075,7 @@ public class dhd extends JFrame implements KeyShortcut {
     	datetime();
     	lshmaxid();
     	detailId();
-    	//comboBox_company.setSelectedIndex(-1);
+    	comboBox_company.setSelectedIndex(-1);
     	comboBox_product.setSelectedIndex(-1);
     	
     }
