@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import com.dao.bean.Company;
 import com.dao.bean.Goods;
+import com.dao.bean.Sale;
 import com.dao.bean.TempSaleDetail;
 import com.other.Item;
 
@@ -159,6 +160,14 @@ public class Dao {
 				      + saledetail.getBz()+"')"
 				      
 				);
+		
+	}
+	public static boolean addSale(Sale sale){
+		if (sale==null){
+			return false;
+		}
+		
+		return exec("{call usp_print_action(?,?,?,?,?)}",sale.getLsh(),sale.getSgs(),sale.getName(),sale.getSphone(),sale.getAddress());
 		
 	}
 /*	
@@ -334,6 +343,22 @@ public class Dao {
 		return result;
 	}
 	
+	public static boolean exec(String sql,String zblsh,String sgs,String sname,String sphone,String address){
+		boolean result = false;
+		try{
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setString(1,zblsh);
+			cstmt.setString(2,sgs);
+			cstmt.setString(3, sname);
+			cstmt.setString(4, sphone);
+			cstmt.setString(5, address);
+			cstmt.execute();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
 	public static int update(String sql) {
 		int result = 0;
 		try {
