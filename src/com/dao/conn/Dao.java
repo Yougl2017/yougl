@@ -175,20 +175,7 @@ public class Dao {
 	public static int delete(String sql) {
 		return update(sql);
 	}
-	
-	// 添加客户信息
-	public static boolean addKeHu(TbKhinfo khinfo) {
-		if (khinfo == null)
-			return false;
-		return insert("insert tb_khinfo values('" + khinfo.getId() + "','"
-				+ khinfo.getKhname() + "','" + khinfo.getJian() + "','"
-				+ khinfo.getAddress() + "','" + khinfo.getBianma() + "','"
-				+ khinfo.getTel() + "','" + khinfo.getFax() + "','"
-				+ khinfo.getLian() + "','" + khinfo.getLtel() + "','"
-				+ khinfo.getMail() + "','" + khinfo.getXinhang() + "','"
-				+ khinfo.getHao() + "')");
-	}
-	
+
 	// �޸Ŀͻ���Ϣ�ķ���
 	public static int updateKeHu(TbKhinfo khinfo) {
 		return update("update tb_khinfo set jian='" + khinfo.getJian()
@@ -218,30 +205,9 @@ public class Dao {
 				+ gysInfo.getYh() + "' where id='" + gysInfo.getId() + "'");
 	}
 	
-	// ��ӹ�Ӧ����Ϣ�ķ���
-	public static boolean addGys(TbGysinfo gysInfo) {
-		if (gysInfo == null)
-			return false;
-		return insert("insert tb_gysinfo values('" + gysInfo.getId()
-				+ "','" + gysInfo.getName() + "','" + gysInfo.getJc()
-				+ "','" + gysInfo.getAddress() + "','"
-				+ gysInfo.getBianma() + "','" + gysInfo.getTel() + "','"
-				+ gysInfo.getFax() + "','" + gysInfo.getLian() + "','"
-				+ gysInfo.getLtel() + "','" + gysInfo.getMail() + "','"
-				+ gysInfo.getYh() + "')");
-	}
+
 	
-	// �����Ʒ
-	public static boolean addSp(TbSpinfo spInfo) {
-		if (spInfo == null)
-			return false;
-		return insert("insert tb_spinfo values('" + spInfo.getId() + "','"
-				+ spInfo.getSpname() + "','" + spInfo.getJc() + "','"
-				+ spInfo.getCd() + "','" + spInfo.getDw() + "','"
-				+ spInfo.getGg() + "','" + spInfo.getBz() + "','"
-				+ spInfo.getPh() + "','" + spInfo.getPzwh() + "','"
-				+ spInfo.getMemo() + "','" + spInfo.getGysname() + "')");
-	}
+
 	
 	// ������Ʒ
 	public static int updateSp(TbSpinfo spInfo) {

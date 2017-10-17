@@ -1070,6 +1070,13 @@ public class dhd extends JFrame implements KeyShortcut {
     	 
     	
     }
+    //插入主表
+    public void InsertMGoods(){
+    	String zblsh=text_slh.getText();
+    	String sgs=comboBox_company.getSelectedItem().toString();
+    	String name=textField_name.getText();
+    	String phone=textField_phone.getText();
+    }
     //清空商品信息
     public void clearGoods(){
     	datetime();
