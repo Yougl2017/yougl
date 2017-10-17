@@ -552,20 +552,6 @@ public class Dao {
 	public static List getJsrs() {
 		List list = findForList("select * from tb_jsr where enable=1");
 		return list;
-	}
-	
-	// �޸��û�����
-	public static int modifyPassword(String oldPass, String pass) {
-		return update("update tb_userlist set pass='" + pass
-				+ "' where pass='" + oldPass + "'");
-	}
-	
-	public static boolean checkLogin(String userStr, String passStr)
-			throws SQLException {
-		ResultSet rs = findForResultSet("select * from tb_userlist where name='"
-				+ userStr + "' and pass='" + passStr + "'");
-		if (rs == null)
-			return false;
-		return rs.next();
 	}*/
+
 }
