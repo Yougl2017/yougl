@@ -29,7 +29,7 @@ public class Dao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"�뽫SQL Server 2000��JDBC���������Ƶ�lib�ļ����С�");
+					"sql2000");
 			System.exit(-1);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,9 +123,7 @@ public class Dao {
 			return info;
 			
 		}
-	
-
-	
+		
 	//指定查询ִ
 	public static ResultSet query(String QueryStr) {
 		ResultSet set = findForResultSet(QueryStr);
@@ -170,12 +168,12 @@ public class Dao {
 		return exec("{call usp_print_action(?,?,?,?,?)}",sale.getLsh(),sale.getSgs(),sale.getName(),sale.getSphone(),sale.getAddress());
 		
 	}
-/*	
-	// ִ��ɾ��
+	
+	//删除信息
 	public static int delete(String sql) {
 		return update(sql);
 	}
-
+	/*
 	// �޸Ŀͻ���Ϣ�ķ���
 	public static int updateKeHu(TbKhinfo khinfo) {
 		return update("update tb_khinfo set jian='" + khinfo.getJian()

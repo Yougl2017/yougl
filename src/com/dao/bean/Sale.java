@@ -18,11 +18,11 @@ public class Sale implements java.io.Serializable {
 	private String address;
 	private String zffs;
 	private String jszt;
-	private Date jssj;
-	private Date dhsj;
-	private BigDecimal zje;
-	private BigDecimal srje;
-	private BigDecimal yhje;
+	private String jssj;
+	private String dhsj;
+	private String zje;
+	private String srje;
+	private String yhje;
 	private String czyh;
 	private String tlsh;
 	private String bz;
@@ -30,15 +30,16 @@ public class Sale implements java.io.Serializable {
 	public Sale() {
 	}
 
-	public Sale(String lsh, String name, String sphone) {
-		this.lsh = lsh;
-		this.name = name;
-		this.sphone = sphone;
-	}
+//	public Sale(String lsh, String name, String sphone) {
+//		this.lsh = lsh;
+//		this.name = name;
+//		this.sphone = sphone;
+//	}
 
-	public Sale(String lsh, String sgs, String name, String sphone, String address, String zffs, String jszt,
-			Date jssj, Date dhsj, BigDecimal zje, BigDecimal srje, BigDecimal yhje, String czyh, String tlsh,
-			String bz) {
+	public Sale(String lsh, String sgs, String name, String sphone, 
+			    String address, String zffs, String jszt,String jssj, 
+			    String dhsj, String zje, String srje, String yhje, 
+			    String czyh,String tlsh,String bz) {
 		this.lsh = lsh;
 		this.sgs = sgs;
 		this.name = name;
@@ -118,46 +119,46 @@ public class Sale implements java.io.Serializable {
 	}
 
 
-	public Date getJssj() {
+	public String getJssj() {
 		return this.jssj;
 	}
 
-	public void setJssj(Date jssj) {
+	public void setJssj(String jssj) {
 		this.jssj = jssj;
 	}
 
 
-	public Date getDhsj() {
+	public String getDhsj() {
 		return this.dhsj;
 	}
 
-	public void setDhsj(Date dhsj) {
+	public void setDhsj(String dhsj) {
 		this.dhsj = dhsj;
 	}
 
-	public BigDecimal getZje() {
+	public String getZje() {
 		return this.zje;
 	}
 
-	public void setZje(BigDecimal zje) {
+	public void setZje(String zje) {
 		this.zje = zje;
 	}
 
 
-	public BigDecimal getSrje() {
+	public String getSrje() {
 		return this.srje;
 	}
 
-	public void setSrje(BigDecimal srje) {
+	public void setSrje(String srje) {
 		this.srje = srje;
 	}
 
 
-	public BigDecimal getYhje() {
+	public String getYhje() {
 		return this.yhje;
 	}
 
-	public void setYhje(BigDecimal yhje) {
+	public void setYhje(String yhje) {
 		this.yhje = yhje;
 	}
 

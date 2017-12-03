@@ -16,14 +16,11 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTable;
@@ -32,12 +29,12 @@ import javax.swing.table.DefaultTableModel;
 
 import com.dao.bean.Company;
 import com.dao.bean.Goods;
+import com.dao.bean.Sale;
 import com.dao.bean.TempSaleDetail;
 import com.dao.conn.Dao;
 import com.other.Item;
 import com.other.KeyShortcut;
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -57,7 +54,6 @@ import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Event;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -231,7 +227,7 @@ public class dhd extends JFrame implements KeyShortcut {
 		
 		
 		//磨边单价
-		textField_mbprice = new JTextField();
+		textField_mbprice = new JTextField("0.00");
 		textField_mbprice.setColumns(10);
 		textField_mbprice.setEditable(false);
 		
@@ -656,6 +652,7 @@ public class dhd extends JFrame implements KeyShortcut {
 						
 							if(e.getKeyCode()==KeyEvent.VK_ENTER){
 								   tf.requestFocus();
+								   tf.selectAll();
 							}
 						
 					}
@@ -694,7 +691,7 @@ public class dhd extends JFrame implements KeyShortcut {
 		
 	}
 	//文本框-文本框 快捷键enter
-	public static void textf_key(JTextField f,JTextField t){
+	public  void textf_key(JTextField f,JTextField t){
 		f.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -716,6 +713,12 @@ public class dhd extends JFrame implements KeyShortcut {
 					if(e.getKeyCode()==KeyEvent.VK_ENTER){
 						t.requestFocus();
 						t.selectAll();  //全选内容
+						if (e.getSource()==textField_long || e.getSource()==textField_wide||e.getSource()==textField_price ){
+							
+							getSquare();   //求面积
+							GetPerimeter(); //求周长
+							
+						}
 					}
 				}
 				
@@ -723,6 +726,7 @@ public class dhd extends JFrame implements KeyShortcut {
 		});
 		
 	}
+
 	//单选快捷键 1/0
 	public static void JCheckBoxKey(JCheckBox jcb){
 		jcb.addKeyListener(new KeyListener() {
@@ -756,7 +760,7 @@ public class dhd extends JFrame implements KeyShortcut {
 		
 	}
 	//求平方
-	public void keypress(DefaultTableModel tableModel1){
+	public void keypress(){
 		textField_count.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -777,6 +781,7 @@ public class dhd extends JFrame implements KeyShortcut {
 				if(e.getSource()==textField_count){
 					if(e.getKeyCode()== KeyEvent.VK_ENTER){
 						getSquare();
+						GetPerimeter();
 						checkBox_mb.requestFocus();
 					
 						
@@ -796,7 +801,7 @@ public class dhd extends JFrame implements KeyShortcut {
 	}
 	//求原材料的金额
 	public void getmoney(){
-		double sum = Double.valueOf(label_mj.getText())*Double.valueOf(textField_count.getText())*Double.valueOf(textField_price.getText());
+		double sum = Double.valueOf(label_mj.getText())*Double.valueOf(textField_price.getText());
 		label_sum.setText(""+sum+"");
 	}
 	//勾选磨边
@@ -901,22 +906,26 @@ public class dhd extends JFrame implements KeyShortcut {
 		RadioButton_lc.addActionListener(action);
 		radioButton_lk.addActionListener(action);
 		radioButton_qt.addActionListener(action);
+		GetPerimeterFuntion();
 		
 	}
 	//周长公式
 	public void GetPerimeterFuntion(){
 		double l=0;
 		if(RadioButton_sb.isSelected()){
-			l=(Integer.parseInt(textField_long.getText())+Integer.parseInt(textField_wide.getText()))*2*0.001;
+			l=(Integer.parseInt(textField_long.getText())+Integer.parseInt(textField_wide.getText()))*2*0.001
+					*Integer.parseInt(textField_count.getText());
 			textField_perimeter.setEditable(false);
 			textField_perimeter.setText(String.valueOf(l));
 		}else if(RadioButton_lc.isSelected()){
 			
-			l=(Integer.parseInt(textField_long.getText()))*2*0.001;
+			l=(Integer.parseInt(textField_long.getText()))*2*0.001
+					*Integer.parseInt(textField_count.getText());
 			textField_perimeter.setEditable(false);
 			textField_perimeter.setText(String.valueOf(l));	
 		}else if (radioButton_lk.isSelected()){
-			l=(Integer.parseInt(textField_wide.getText()))*2*0.001;
+			l=(Integer.parseInt(textField_wide.getText()))*2*0.001
+					*Integer.parseInt(textField_count.getText());
 			textField_perimeter.setEditable(false);
 			textField_perimeter.setText(String.valueOf(l));
 			
@@ -937,6 +946,10 @@ public class dhd extends JFrame implements KeyShortcut {
 	public void deleTable(){
 		
 		int row = table.getSelectedRow();
+		Object str = table.getModel().getValueAt(row, 13);
+		String sql="delete from temp_sale_detail where mxxh='"+str+"'";
+		
+		Dao.delete(sql);
 		tableModel.removeRow(row);
 	}
  	//获取流水号
@@ -966,12 +979,15 @@ public class dhd extends JFrame implements KeyShortcut {
 	public void print(JButton button){
 		button.addActionListener(new ActionListener() {
 			
+			
+			
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
+					InsertMGoods();
 			    	JasperDesign jasperDesign=JRXmlLoader.load("report3.jrxml");
-			    	//System.out.print("12");
 			    	JasperReport jasperReport=JasperCompileManager.compileReport(jasperDesign);
 			    	HashMap p=new HashMap();
 			    	p.put("name", "郑泽游");
@@ -1062,10 +1078,10 @@ public class dhd extends JFrame implements KeyShortcut {
     	String kklx = "9";
     	double kkdj = Double.valueOf(textField_kkprice.getText());
     	double kksl = Double.valueOf(textField_kkcount.getText());
-    	//String zje  = 
+    	double zje  = Double.valueOf(label_sum.getText())+kkdj*kksl+zkdj*zksl+mbdj*mbzc*sl;
     	String bz  =textField_remark.getText();
-    	TempSaleDetail tsaledetail= new TempSaleDetail(zblsh,"0",dname,"111",dj,chang,kuang,gg,sl,mblx,
-    			mbdj,mbzc,zklx,zkdj,zksl,kklx,kkdj,kksl,2.0,bz); 
+    	TempSaleDetail tsaledetail= new TempSaleDetail(zblsh,"0",dname,"㎡",dj,chang,kuang,gg,sl,mblx,
+    			mbdj,mbzc,zklx,zkdj,zksl,kklx,kkdj,kksl,zje,bz); 
     	boolean rs = Dao.addSaleDetail(tsaledetail);
     	 
     	
@@ -1076,6 +1092,8 @@ public class dhd extends JFrame implements KeyShortcut {
     	String sgs=comboBox_company.getSelectedItem().toString();
     	String name=textField_name.getText();
     	String phone=textField_phone.getText();
+    	Sale sale= new Sale(zblsh,sgs,name,phone,"5","6","7","8","9","10","11","12","13","14","15");
+    	boolean rs=Dao.addSale(sale);
     }
     //清空商品信息
     public void clearGoods(){

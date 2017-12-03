@@ -15,7 +15,7 @@ public class Test {
         Dhd.textf_key(Dhd.textField_long, dhd.textField_wide);
         Dhd.textf_key(Dhd.textField_wide, Dhd.textField_price);
         Dhd.textf_key(Dhd.textField_price, Dhd.textField_count);
-        Dhd.keypress(Dhd.tableModel);
+        Dhd.keypress();
         Dhd.isselect(Dhd.checkBox_mb);
         Dhd.text_jcomboxkey(Dhd.comboBox_product, Dhd.textField_date);
         Dhd.JCheckBoxKey(Dhd.checkBox_mb);
