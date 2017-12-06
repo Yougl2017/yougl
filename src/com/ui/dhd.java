@@ -291,7 +291,7 @@ public class dhd extends JFrame implements KeyShortcut {
 		textField_remark.setColumns(10);
 		
 		detailId = new JLabel("明细序号");
-		//detailId.s
+		
 		
 		label_sum = new JLabel("金额");
 		label_sum.setEnabled(false);
@@ -478,6 +478,7 @@ public class dhd extends JFrame implements KeyShortcut {
 		table.getColumnModel().getColumn(3).setPreferredWidth(10);
 		table.getColumnModel().getColumn(7).setPreferredWidth(85);
 		table.getColumnModel().getColumn(8).setPreferredWidth(80);
+		table.getColumnModel().getColumn(11).setPreferredWidth(120);
 		table.getColumnModel().getColumn(13).setMaxWidth(0);
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();//单元格渲染器  
 		tcr.setHorizontalAlignment(JLabel.CENTER);
@@ -638,6 +639,9 @@ public class dhd extends JFrame implements KeyShortcut {
 		textField_price.setText(Goods.getGoodsPrice());
 		textField_long.setText("1000");
 		textField_wide.setText("1000");
+		//求面积
+		getSquare();
+		GetPerimeter();
 	
 	}
 	/**下拉框-文本框快捷键enter**/
@@ -821,6 +825,7 @@ public class dhd extends JFrame implements KeyShortcut {
 						radioButton_qt.setEnabled(true);
 						
 						GetPerimeterFuntion();
+						textField_remark.setText(remark());
 						
 						
 					}
@@ -832,6 +837,7 @@ public class dhd extends JFrame implements KeyShortcut {
 						radioButton_qt.setEnabled(false);
 						textField_perimeter.setEditable(false);
 						textField_perimeter.setText("0.00");
+						textField_remark.setText(remark());
 						
 					}
 				}
@@ -853,12 +859,14 @@ public class dhd extends JFrame implements KeyShortcut {
 					if(checkBox_zk.isSelected()){
 						textField_zkprice.setEditable(true);
 						textField_zkcount.setEditable(true);
+						textField_remark.setText(remark());
 					}
 					else{
 						textField_zkprice.setEditable(false);
 						textField_zkcount.setEditable(false);
 						textField_zkprice.setText("0.00");
 						textField_zkcount.setText("0.00");
+						textField_remark.setText(remark());
 					}
 				}
 				
@@ -879,12 +887,14 @@ public class dhd extends JFrame implements KeyShortcut {
 					if(checkBox_kk.isSelected()){
 						textField_kkprice.setEditable(true);
 						textField_kkcount.setEditable(true);
+						textField_remark.setText(remark());
 					}
 					else{
 						textField_kkprice.setEditable(false);
 						textField_kkcount.setEditable(false);
 						textField_kkprice.setText("0.00");
 						textField_kkcount.setText("0.00");
+						textField_remark.setText(remark());
 					}
 				}
 				
@@ -899,7 +909,8 @@ public class dhd extends JFrame implements KeyShortcut {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				GetPerimeterFuntion();				
+				GetPerimeterFuntion();	
+				textField_remark.setText(remark()); //显示备注信息
 			}
 		};
 		RadioButton_sb.addActionListener(action);
@@ -938,7 +949,7 @@ public class dhd extends JFrame implements KeyShortcut {
  	public void addTable(){
     	String[] rowValues={(String)text_slh.getText(),(String) comboBox_product.getSelectedItem().toString(),(String)textField_long.getText()+"*"+(String)textField_wide.getText(),"㎡",(String)textField_price.getText(),(String)textField_count.getText()
     			,(String)label_mj.getText(),(String)label_sum.getText(),(String)textField_mbprice.getText(),(String)textField_perimeter.getText(),
-    			(String)textField_surcharge.getText(),"",(String)textField_remark.getText(),(String)detailId.getText()};
+    			(String)textField_surcharge.getText(),(String)textField_remark.getText(),"",(String)detailId.getText()};
     	 tableModel.addRow(rowValues);
     	
     }
@@ -1102,6 +1113,35 @@ public class dhd extends JFrame implements KeyShortcut {
     	detailId();
     	comboBox_company.setSelectedIndex(-1);
     	comboBox_product.setSelectedIndex(-1);
+    	
+    }
+    //备注字符串处理
+    public String remark(){
+    	String  remark_str="";
+    	if (checkBox_mb.isSelected()){
+    		remark_str="磨边";
+    		if (RadioButton_sb.isSelected()){
+        		
+        		remark_str = remark_str+" 四边";
+        	}
+        	if (RadioButton_lc.isSelected()){
+        		remark_str=remark_str+" 二长";
+        	}
+        	if (radioButton_lk.isSelected()){
+        		remark_str =remark_str+" 两宽";
+        	}
+        	if (radioButton_qt.isSelected()){
+        		remark_str =remark_str+" 其他";
+        	}
+    	}
+    	
+    	if (checkBox_kk.isSelected()){
+    		remark_str =remark_str+" 开口"+textField_kkcount.getText()+"个";
+    	}
+    	if (checkBox_zk.isSelected()){
+    		remark_str =remark_str+" 钻孔"+textField_zkcount.getText()+"个";
+    	}
+		return remark_str;
     	
     }
 }
