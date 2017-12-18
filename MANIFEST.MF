@@ -1,4 +1,8 @@
 Manifest-Version: 1.0
 Sealed: true
 Main-Class: com.Test.Test
-Class-Path: sqljdbc4.jar
+Class-Path: sqljdbc4.jar iReport.jar iText-2.1.7.jar 
+  iTextAsian.jar jasperreports-5.6.0.jar commons-digester-2.1.jar commons-beanutils-1.8.0.jar
+  commons-collections-3.2.1.jar commons-io.jar commons-logging.jar 
+  groovy-all-1.7.5.jar miglayout15-swing.jar xerces-2.6.2.jar poi-3.5-FINAL-20090928.jar
+  

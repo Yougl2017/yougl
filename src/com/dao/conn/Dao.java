@@ -38,7 +38,7 @@ public class Dao {
 	
 	private Dao() {
 	}
-	
+	/*
 	public static int restoreOrBackup(String sql) throws Exception {
 		int rs = 0;
 		if (conn != null) {
@@ -59,7 +59,7 @@ public class Dao {
 		// �ָ�ԭ�����ݿ�����
 		conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
 		return rs;
-	}
+	}*/
 	
 	// 客户信息
 	public static List getKhInfos() {
