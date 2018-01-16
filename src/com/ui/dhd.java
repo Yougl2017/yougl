@@ -96,6 +96,9 @@ public class dhd extends JFrame implements KeyShortcut {
 	private JLabel detailId;
 	private JLabel label_sum;
 	private JLabel label_square;
+	private JLabel Perimeter_money;  //周长金额
+	private JButton button_repetition;//重打
+	private JTextField text_other;
 
 	/**
 	 * Launch the application.
@@ -164,11 +167,8 @@ public class dhd extends JFrame implements KeyShortcut {
 		);
 		panel_button.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 5));
 
-		JButton button_repetition = new JButton("重打");
-		button_repetition.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		button_repetition = new JButton("查询");
+		
 		
 		
 		button_print = new JButton("打印");
@@ -299,6 +299,15 @@ public class dhd extends JFrame implements KeyShortcut {
 		
 		label_square = new JLabel("");
 		
+	    Perimeter_money = new JLabel("0");
+	    Perimeter_money.setForeground(Color.red);
+		
+		text_other = new JTextField();
+		text_other.setText("0.00");
+		text_other.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("元");
+		
 		
 		
 		
@@ -312,53 +321,63 @@ public class dhd extends JFrame implements KeyShortcut {
 					.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_pro.createSequentialGroup()
 							.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING, false)
-									.addGroup(gl_panel_pro.createSequentialGroup()
-										.addComponent(checkBox_mb)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(RadioButton_sb)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(RadioButton_lc)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(radioButton_lk)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(radioButton_qt))
-									.addGroup(gl_panel_pro.createSequentialGroup()
-										.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
-											.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(gl_panel_pro.createSequentialGroup()
+									.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panel_pro.createSequentialGroup()
+											.addComponent(checkBox_mb)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(RadioButton_sb)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(RadioButton_lc)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(radioButton_lk)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(radioButton_qt))
+										.addGroup(gl_panel_pro.createSequentialGroup()
+											.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
 												.addGroup(gl_panel_pro.createSequentialGroup()
-													.addComponent(checkBox_zk)
-													.addPreferredGap(ComponentPlacement.UNRELATED)
-													.addComponent(label_zkprice)
+													.addComponent(label_12)
 													.addPreferredGap(ComponentPlacement.RELATED)
-													.addComponent(textField_zkprice, 0, 0, Short.MAX_VALUE))
+													.addComponent(textField_surcharge, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.UNRELATED)
+													.addComponent(text_other, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
 												.addGroup(gl_panel_pro.createSequentialGroup()
-													.addComponent(checkBox_kk)
-													.addPreferredGap(ComponentPlacement.UNRELATED)
-													.addComponent(label_kkprice)
+													.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING, false)
+														.addGroup(gl_panel_pro.createSequentialGroup()
+															.addComponent(checkBox_zk)
+															.addPreferredGap(ComponentPlacement.UNRELATED)
+															.addComponent(label_zkprice)
+															.addPreferredGap(ComponentPlacement.RELATED)
+															.addComponent(textField_zkprice, 0, 0, Short.MAX_VALUE))
+														.addGroup(gl_panel_pro.createSequentialGroup()
+															.addComponent(checkBox_kk)
+															.addPreferredGap(ComponentPlacement.UNRELATED)
+															.addComponent(label_kkprice)
+															.addPreferredGap(ComponentPlacement.RELATED)
+															.addComponent(textField_kkprice, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
+													.addGap(24)
+													.addGroup(gl_panel_pro.createParallelGroup(Alignment.TRAILING)
+														.addComponent(label_zkcount)
+														.addComponent(lblNewLabel))))
+											.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_panel_pro.createSequentialGroup()
+													.addGap(18)
+													.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
+														.addGroup(gl_panel_pro.createSequentialGroup()
+															.addGap(10)
+															.addComponent(textField_kkcount, GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
+														.addComponent(textField_zkcount, 0, 0, Short.MAX_VALUE)))
+												.addGroup(gl_panel_pro.createSequentialGroup()
 													.addPreferredGap(ComponentPlacement.RELATED)
-													.addComponent(textField_kkprice, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
-											.addGroup(gl_panel_pro.createSequentialGroup()
-												.addComponent(label_12)
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(textField_surcharge, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-										.addGap(24)
-										.addGroup(gl_panel_pro.createParallelGroup(Alignment.TRAILING)
-											.addComponent(label_zkcount)
-											.addComponent(lblNewLabel))
-										.addGap(18)
-										.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
-											.addGroup(gl_panel_pro.createSequentialGroup()
-												.addGap(10)
-												.addComponent(textField_kkcount, GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
-											.addComponent(textField_zkcount, 0, 0, Short.MAX_VALUE))))
+													.addComponent(lblNewLabel_1)))))
+									.addGap(2))
 								.addGroup(gl_panel_pro.createSequentialGroup()
 									.addComponent(label_product)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(comboBox_product, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(detailId)))
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGap(4)
 							.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_pro.createSequentialGroup()
 									.addComponent(label_long)
@@ -388,14 +407,16 @@ public class dhd extends JFrame implements KeyShortcut {
 									.addComponent(label_mj)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(label_square)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
 									.addComponent(label_sum)
 									.addGap(18))
 								.addGroup(gl_panel_pro.createSequentialGroup()
 									.addComponent(label_perimeter)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(textField_perimeter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap(352, Short.MAX_VALUE))))
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(Perimeter_money)
+									.addContainerGap(336, Short.MAX_VALUE))))
 						.addGroup(gl_panel_pro.createSequentialGroup()
 							.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_pro.createSequentialGroup()
@@ -434,7 +455,8 @@ public class dhd extends JFrame implements KeyShortcut {
 						.addComponent(label_mbprice)
 						.addComponent(textField_mbprice, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label_perimeter)
-						.addComponent(textField_perimeter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textField_perimeter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(Perimeter_money))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel_pro.createParallelGroup(Alignment.BASELINE)
 						.addComponent(checkBox_zk)
@@ -454,7 +476,10 @@ public class dhd extends JFrame implements KeyShortcut {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_pro.createParallelGroup(Alignment.LEADING)
 						.addComponent(label_12)
-						.addComponent(textField_surcharge, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_pro.createParallelGroup(Alignment.BASELINE)
+							.addComponent(textField_surcharge, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(text_other, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblNewLabel_1)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(checkBox_)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -594,9 +619,17 @@ public class dhd extends JFrame implements KeyShortcut {
 		
 		Focus(textField_kkcount); 
 		Focus(textField_zkcount);
+		Focus_money(textField_mbprice);
 		
 	    lshmaxid();
 	    print();
+	    button_repetition.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Sale_Detail Sale_detail= new Sale_Detail();
+			
+			}
+		});
 	
 		
 		
@@ -800,12 +833,23 @@ public class dhd extends JFrame implements KeyShortcut {
 	}
 	//求平方
 	public void getSquare(){
+		double t_s=Double.valueOf(textField_long.getText())*0.001*Double.valueOf(textField_wide.getText())*0.001;
+		if (t_s>0.3){
 		double sum=Double.valueOf(textField_long.getText())*0.001*Double.valueOf(textField_wide.getText())*0.001*Double.valueOf(textField_count.getText());
         label_mj.setForeground(Color.red);
 		label_mj.setText(""+sum+"");
 		label_square.setText("㎡");
 		label_square.setForeground(Color.red);
 		getmoney();
+		}else
+		{
+			double sum=0.3*Double.valueOf(textField_count.getText());
+	        label_mj.setForeground(Color.red);
+			label_mj.setText(""+sum+"");
+			label_square.setText("㎡");
+			label_square.setForeground(Color.red);
+			getmoney();
+		}
 	}
 	//求原材料的金额
 	public void getmoney(){
@@ -913,7 +957,8 @@ public class dhd extends JFrame implements KeyShortcut {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				GetPerimeterFuntion();	
+				GetPerimeterFuntion();
+				Getperimeter_money();
 				textField_remark.setText(remark()); //显示备注信息
 			}
 		};
@@ -922,10 +967,11 @@ public class dhd extends JFrame implements KeyShortcut {
 		radioButton_lk.addActionListener(action);
 		radioButton_qt.addActionListener(action);
 		GetPerimeterFuntion();
+		Getperimeter_money();
 		
 	}
 	//周长公式
-	public void GetPerimeterFuntion(){
+	public double GetPerimeterFuntion(){
 		double l=0;
 		if(RadioButton_sb.isSelected()){
 			l=(Integer.parseInt(textField_long.getText())+Integer.parseInt(textField_wide.getText()))*2*0.001
@@ -948,6 +994,14 @@ public class dhd extends JFrame implements KeyShortcut {
 			textField_perimeter.setEditable(true);
 			
 		}
+		return l;
+	}
+	//求周长金额
+	public void Getperimeter_money(){
+		double s=0;
+		s=GetPerimeterFuntion()*Double.valueOf(textField_mbprice.getText());
+		Perimeter_money.setText(""+s+"");
+		
 	}
 	//添加表数据
  	public void addTable(){
@@ -1005,7 +1059,7 @@ public class dhd extends JFrame implements KeyShortcut {
 			    	JasperReport jasperReport=JasperCompileManager.compileReport(jasperDesign);
 			    	HashMap p=new HashMap();
 			    	p.put("name", "郑泽游");
-			    	JRResultSetDataSource rsd= new JRResultSetDataSource(Dao.query("select * from temp_sale_detail where zblsh='"+(String)text_slh.getText()+"'"));
+			    	JRResultSetDataSource rsd= new JRResultSetDataSource(Dao.query("select sgs,sphone,name,zblsh,dname,dw,dj,gg,sl,zje,bz,zsl,mj from printdate where zblsh='"+(String)text_slh.getText()+"'"));
 			    	JasperPrint  jasperprint=JasperFillManager.fillReport(jasperReport, p,rsd);
 			    	JasperViewer  jr=new JasperViewer (jasperprint,false);
 			    	jr.setVisible(true);
@@ -1110,7 +1164,7 @@ public class dhd extends JFrame implements KeyShortcut {
     	String sgs=comboBox_company.getSelectedItem().toString();
     	String name=textField_name.getText();
     	String phone=textField_phone.getText();
-    	Sale sale= new Sale(zblsh,sgs,name,phone,"5","6","7","8","9","10","11","12","13","14","15");
+    	Sale sale= new Sale(zblsh,sgs,name,phone,"5","6","7","8","9","10","11","12","13","14","15","16");
     	boolean rs=Dao.addSale(sale);
     }
     //清空商品信息
@@ -1137,7 +1191,7 @@ public class dhd extends JFrame implements KeyShortcut {
         		remark_str=remark_str+" 二长";
         	}
         	if (radioButton_lk.isSelected()){
-        		remark_str =remark_str+" 两宽";
+        		remark_str =remark_str+" 两短";
         	}
         	if (radioButton_qt.isSelected()){
         		remark_str =remark_str+" 其他";
@@ -1171,6 +1225,25 @@ public class dhd extends JFrame implements KeyShortcut {
 				
 			}
 		});
-    	
+      	
+    }
+  //磨边单价计算
+    public void Focus_money(JTextField textfield){
+     	    	textfield.addFocusListener(new FocusListener() {
+     				
+     				@Override
+     				public void focusLost(FocusEvent e) {
+     					// TODO Auto-generated method stub
+     				    if (e.getSource()==textfield){
+     				    	GetPerimeter();
+     				    }
+     				}
+     				
+     				@Override
+     				public void focusGained(FocusEvent e) {
+     					// TODO Auto-generated method stub
+     					
+     				}
+     			});
     }
 }

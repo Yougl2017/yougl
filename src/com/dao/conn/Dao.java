@@ -38,6 +38,7 @@ public class Dao {
 	
 	private Dao() {
 	}
+	
 	/*
 	public static int restoreOrBackup(String sql) throws Exception {
 		int rs = 0;
@@ -123,6 +124,29 @@ public class Dao {
 			return info;
 			
 		}
+    
+     //获得账单号
+		public static Sale getzdinfo(String lsh){
+			
+			String where = "lsh like  '%"+lsh+"%'";
+			Sale sale = new Sale();
+			ResultSet set = findForResultSet("select lsh,sgs,name,sl,zje,jssj from Sale where "+ where);
+			try {
+				if (set.next()){
+					sale.setLsh(set.getString("lsh").trim());
+					sale.setSgs(set.getString("sgs").trim());
+					sale.setName(set.getString("name").trim());
+					sale.setSl(set.getString("sl").trim());
+					sale.setZje(set.getString("zje").trim());
+					sale.setJssj(set.getString("jssj").trim());
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return sale;
+			
+		}
 		
 	//指定查询ִ
 	public static ResultSet query(String QueryStr) {
@@ -173,6 +197,10 @@ public class Dao {
 	public static int delete(String sql) {
 		return update(sql);
 	}
+	public static List getPInfos() {
+		List list = findForList("select lsh,sgs,sphone,name,jssj,zje,sl from sale");
+		return list;
+	}
 	/*
 	// �޸Ŀͻ���Ϣ�ķ���
 	public static int updateKeHu(TbKhinfo khinfo) {
@@ -219,10 +247,7 @@ public class Dao {
 	}
 	
 	// ��ȡ������Ʒ��Ϣ
-	public static List getSpInfos() {
-		List list = findForList("select * from tb_spinfo");
-		return list;
-	}
+	
 	
 	
 	

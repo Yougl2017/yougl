@@ -26,6 +26,7 @@ public class Sale implements java.io.Serializable {
 	private String czyh;
 	private String tlsh;
 	private String bz;
+	private String sl;
 
 	public Sale() {
 	}
@@ -39,7 +40,7 @@ public class Sale implements java.io.Serializable {
 	public Sale(String lsh, String sgs, String name, String sphone, 
 			    String address, String zffs, String jszt,String jssj, 
 			    String dhsj, String zje, String srje, String yhje, 
-			    String czyh,String tlsh,String bz) {
+			    String czyh,String tlsh,String bz,String sl) {
 		this.lsh = lsh;
 		this.sgs = sgs;
 		this.name = name;
@@ -55,6 +56,7 @@ public class Sale implements java.io.Serializable {
 		this.czyh = czyh;
 		this.tlsh = tlsh;
 		this.bz = bz;
+		this.sl=sl;
 	}
 
 
@@ -187,6 +189,14 @@ public class Sale implements java.io.Serializable {
 
 	public void setBz(String bz) {
 		this.bz = bz;
+	}
+
+	public String getSl() {
+		return sl;
+	}
+
+	public void setSl(String sl) {
+		this.sl = sl;
 	}
 
 }
