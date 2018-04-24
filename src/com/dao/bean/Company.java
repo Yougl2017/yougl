@@ -9,41 +9,45 @@ package com.dao.bean;
 
 public class Company implements java.io.Serializable {
 
-	private String companyId;
+	private int companyId;
 	private String companyName;
 	private String companyAddress;
 	private String companyContacts;
 	private String companyPhone;
 	private String companyRamark;
+	private String companyPy;
+
+	
 
 	public Company() {
 	}
 
-	public Company(String companyId, String companyName, String companyContacts, String companyPhone) {
+	public Company(int companyId, String companyName, String companyContacts, String companyPhone) {
 		this.companyId = companyId;
 		this.companyName = companyName;
 		this.companyContacts = companyContacts;
 		this.companyPhone = companyPhone;
 	}
 
-	public Company(String companyId, String companyName, String companyAddress, String companyContacts,
-			String companyPhone, String companyRamark) {
+	public Company(int companyId, String companyName,String companyContacts, String companyAddress, 
+			String companyPhone, String companyRamark,String companyPy) {
 		this.companyId = companyId;
 		this.companyName = companyName;
 		this.companyAddress = companyAddress;
 		this.companyContacts = companyContacts;
 		this.companyPhone = companyPhone;
 		this.companyRamark = companyRamark;
+		this.companyPy = companyPy;
 	}
 
 
 
 	
-	public String getCompanyId() {
+	public int getCompanyId() {
 		return this.companyId;
 	}
 
-	public void setCompanyId(String companyId) {
+	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
 	}
 
@@ -90,5 +94,11 @@ public class Company implements java.io.Serializable {
 	public void setCompanyRamark(String companyRamark) {
 		this.companyRamark = companyRamark;
 	}
+	public String getCompanyPy() {
+		return companyPy;
+	}
 
+	public void setCompanyPy(String companyPy) {
+		this.companyPy = companyPy;
+	}
 }

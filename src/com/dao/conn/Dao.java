@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import com.dao.bean.Company;
 import com.dao.bean.Goods;
 import com.dao.bean.Sale;
+import com.dao.bean.SaleDetail;
 import com.dao.bean.TempSaleDetail;
 import com.other.Item;
 
@@ -64,7 +65,7 @@ public class Dao {
 	
 	// 客户信息
 	public static List getKhInfos() {
-		List list = findForList("select company_id,company_name from company");
+		List list = findForList("select company_id,company_name,company_py,company_contacts,company_phone,company_address,company_ramark from company order by company_id ");
 		return list;
 	}
 	//获取商品信息
@@ -84,7 +85,7 @@ public class Dao {
 		ResultSet set = findForResultSet("select company_id,company_name,company_address,company_contacts,company_phone,company_ramark from company where "+where);
 		try {
 			if (set.next()){
-				info.setCompanyId(set.getString("company_id").trim());
+				info.setCompanyId(set.getInt("company_id"));
 				info.setCompanyName(set.getString("company_name").trim());
 				info.setCompanyAddress(set.getString("company_address").trim());
 				info.setCompanyContacts(set.getString("company_contacts").trim());
@@ -155,11 +156,11 @@ public class Dao {
 	}
 	
 	//插入销售商品
-	public static boolean addSaleDetail(TempSaleDetail saledetail){
+	public static boolean addSaleDetail(SaleDetail saledetail){
 		if (saledetail==null){
 			return false;
 		}
-		return insert("insert temp_sale_detail(zblsh,idm,dname,dw,dj,chang,kuang,gg,sl,mblx,mbdj,mbzc,zklx,zkdj,zksl,kklx,kkdj,kksl,zje,bz) values('"
+		return insert("insert sale_detail(zblsh,idm,dname,dw,dj,chang,kuang,gg,sl,mblx,mbdj,mbzc,zklx,zkdj,zksl,kklx,kkdj,kksl,zje,bz) values('"
 				      + saledetail.getZblsh()+"','"
 				      + saledetail.getIdm()+"','"
 				      + saledetail.getDname()+"','"
@@ -192,13 +193,24 @@ public class Dao {
 		return exec("{call usp_print_action(?,?,?,?,?)}",sale.getLsh(),sale.getSgs(),sale.getName(),sale.getSphone(),sale.getAddress());
 		
 	}
+	//插入用户信息
+	public static boolean addCompany(Company company){
+		if (company==null){
+			return false;
+		}
+		
+		return exec("{call usp_edit_company(?,?,?,?,?,?,?)}",company.getCompanyId(),company.getCompanyName(),company.getCompanyContacts(),company.getCompanyPhone(),company.getCompanyAddress(),company.getCompanyRamark(),company.getCompanyPy());
+		
+	}
+	
 	
 	//删除信息
 	public static int delete(String sql) {
 		return update(sql);
 	}
 	public static List getPInfos() {
-		List list = findForList("select lsh,sgs,sphone,name,jssj,zje,sl from sale");
+		List list = findForList("select lsh,sgs,name,sphone,a.zje,sum(cast(chang*kuang*b.sl*0.001*0.001as numeric(10,2))) as mj,jssj "
+				+ "from sale a join Sale_detail b on a.lsh=b.zblsh group by lsh,sgs,name,sphone,a.zje,jssj  order by jssj desc");
 		return list;
 	}
 	/*
@@ -331,7 +343,7 @@ public class Dao {
 		}
 		return result;
 	}
-	
+	//销售表存储过程
 	public static boolean exec(String sql,String zblsh,String sgs,String sname,String sphone,String address){
 		boolean result = false;
 		try{
@@ -348,6 +360,29 @@ public class Dao {
 		}
 		return false;
 	}
+	
+	//客户信息处理存储过程
+	public static boolean exec(String sql,int id,String sgs,String sname,String sphone,String address,String remark,String py){
+		boolean result = false;
+		try{
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1,id);
+			cstmt.setString(2,sgs);
+			cstmt.setString(3, sname);
+			cstmt.setString(4, sphone);
+			cstmt.setString(5, address);
+			cstmt.setString(6, remark);
+			cstmt.setString(7, py);
+			cstmt.execute();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
+	
+	
 	public static int update(String sql) {
 		int result = 0;
 		try {

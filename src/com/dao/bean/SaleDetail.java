@@ -18,16 +18,16 @@ public class SaleDetail implements java.io.Serializable {
 	private double chang;
 	private double kuang;
 	private String gg;
-	private double sl;
+	private int sl;
 	private String mblx;
 	private double mbdj;
 	private double mbzc;
 	private String zklx;
 	private double zkdj;
-	private double zksl;
+	private int zksl;
 	private String kklx;
 	private double kkdj;
-	private double kksl;
+	private int kksl;
 	private double zje;
 	private String bz;
 
@@ -39,8 +39,8 @@ public class SaleDetail implements java.io.Serializable {
 	}
 
 	public SaleDetail(String zblsh, String idm, String dname, String dw, double dj, double chang,
-			double kuang, String gg, double sl, String mblx, double mbdj, double mbzc, String zklx,
-			double zkdj, double zksl, String kklx, double kkdj, double kksl, double zje, String bz) {
+			double kuang, String gg, int sl, String mblx, double mbdj, double mbzc, String zklx,
+			double zkdj, int zksl, String kklx, double kkdj, int kksl, double zje, String bz) {
 		this.zblsh = zblsh;
 		this.idm = idm;
 		this.dname = dname;
@@ -146,11 +146,11 @@ public class SaleDetail implements java.io.Serializable {
 	}
 
 
-	public double getSl() {
+	public int getSl() {
 		return this.sl;
 	}
 
-	public void setSl(double sl) {
+	public void setSl(int sl) {
 		this.sl = sl;
 	}
 
@@ -199,11 +199,11 @@ public class SaleDetail implements java.io.Serializable {
 	}
 
 
-	public double getZksl() {
+	public int getZksl() {
 		return this.zksl;
 	}
 
-	public void setZksl(double zksl) {
+	public void setZksl(int zksl) {
 		this.zksl = zksl;
 	}
 
@@ -226,11 +226,11 @@ public class SaleDetail implements java.io.Serializable {
 	}
 
 
-	public double getKksl() {
+	public int getKksl() {
 		return this.kksl;
 	}
 
-	public void setKksl(double kksl) {
+	public void setKksl(int kksl) {
 		this.kksl = kksl;
 	}
 

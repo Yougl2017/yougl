@@ -99,6 +99,7 @@ public class dhd extends JFrame implements KeyShortcut {
 	private JLabel Perimeter_money;  //周长金额
 	private JButton button_repetition;//重打
 	private JTextField text_other;
+	private JCheckBox  CheckBox_xb; //斜边
 
 	/**
 	 * Launch the application.
@@ -308,7 +309,7 @@ public class dhd extends JFrame implements KeyShortcut {
 		
 		JLabel lblNewLabel_1 = new JLabel("元");
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("斜边");
+		CheckBox_xb = new JCheckBox("斜边");
 		
 		
 		
@@ -364,7 +365,7 @@ public class dhd extends JFrame implements KeyShortcut {
 										.addGroup(gl_panel_pro.createSequentialGroup()
 											.addComponent(checkBox_mb)
 											.addGap(2)
-											.addComponent(chckbxNewCheckBox)
+											.addComponent(CheckBox_xb)
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addComponent(RadioButton_sb)
 											.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -458,7 +459,7 @@ public class dhd extends JFrame implements KeyShortcut {
 						.addComponent(label_perimeter)
 						.addComponent(textField_perimeter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(Perimeter_money, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-						.addComponent(chckbxNewCheckBox))
+						.addComponent(CheckBox_xb))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel_pro.createParallelGroup(Alignment.BASELINE)
 						.addComponent(checkBox_zk)
@@ -859,15 +860,15 @@ public class dhd extends JFrame implements KeyShortcut {
 		label_sum.setText(""+sum+"");
 	}
 	//勾选磨边
-	public void isselect(JCheckBox jcb){
+	public void isselect(){
 		ItemListener itemlistener = new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				Object obj=e.getItem();
-				if (obj.equals(jcb)){
-					if(jcb.isSelected()){
+				if (obj.equals(checkBox_mb)){
+					if(checkBox_mb.isSelected()){
 						textField_mbprice.setEditable(true);
 						RadioButton_sb.setEnabled(true);
 						RadioButton_lc.setEnabled(true);
@@ -894,7 +895,7 @@ public class dhd extends JFrame implements KeyShortcut {
 				
 			}
 		};
-		jcb.addItemListener(itemlistener);
+		checkBox_mb.addItemListener(itemlistener);
 		
 	}
 	//勾选钻孔
@@ -1183,8 +1184,15 @@ public class dhd extends JFrame implements KeyShortcut {
     //备注字符串处理 
     public String remark(){
     	String  remark_str="";
-    	if (checkBox_mb.isSelected()){
-    		remark_str="磨边";
+    	if (checkBox_mb.isSelected() || CheckBox_xb.isSelected()){
+    		if (checkBox_mb.isSelected() ){
+    			remark_str="直边";
+    		}else
+    		{
+    			remark_str="斜边";
+    		}
+    		
+    		  
     		if (RadioButton_sb.isSelected()){
         		
         		remark_str = remark_str+" 四边";
