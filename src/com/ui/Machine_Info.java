@@ -1,19 +1,7 @@
 package com.ui;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
 import java.awt.FlowLayout;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import com.dao.bean.Company;
-import com.dao.conn.Dao;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,22 +11,34 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
-public class Custom_Info extends JInternalFrame {
+
+import com.dao.bean.Machine;
+import com.dao.conn.Dao;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+
+public class Machine_Info extends JInternalFrame {
+
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private JTextField CName_textField;
-	private JTextField Contact_textField;
-	private JTextField PY_textField;
-	private JTextField Phone_textField;
-	private JTextField Address_textField;
-	private JTextField Remark_textField;
+	private JTextField MName_textField;
+	private JTextField Type_textField;
 	private JLabel EID_Label;
 	private JButton NUserButton;
 	private JButton ColseButton;
 	private JButton SaveButton;
+	private JSpinner Price_spinner;
 
 	/**
 	 * Launch the application.
@@ -48,7 +48,7 @@ public class Custom_Info extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Custom_Info() {
+	public Machine_Info() {
 		//初始化
 		initialize();
 		
@@ -69,7 +69,7 @@ public class Custom_Info extends JInternalFrame {
 	}
 	//初始化窗口
 	private void initialize() {
-		setTitle("客户信息");
+		setTitle("加工信息");
 		setBounds(0, 0, 800, 900);
 		setClosable(true);
 		setMaximizable(true);
@@ -83,26 +83,12 @@ public class Custom_Info extends JInternalFrame {
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panel.add(panel_2);
 		
-		JLabel CName_Lable = new JLabel("公司名称：");
+		JLabel CName_Lable = new JLabel("类型名称：");
 		panel_2.add(CName_Lable);
 		
-		CName_textField = new JTextField();
-		panel_2.add(CName_textField);
-		CName_textField.setColumns(40);
-		
-		JLabel PY_Label = new JLabel("拼音：");
-		panel_2.add(PY_Label);
-		
-		PY_textField = new JTextField();
-		panel_2.add(PY_textField);
-		PY_textField.setColumns(10);
-		
-		JLabel Contact_Label = new JLabel("联系人：");
-		panel_2.add(Contact_Label);
-		
-		Contact_textField = new JTextField();
-		panel_2.add(Contact_textField);
-		Contact_textField.setColumns(10);
+		MName_textField = new JTextField();
+		panel_2.add(MName_textField);
+		MName_textField.setColumns(40);
 		
 		JLabel Id_Label = new JLabel("编号:");
 		panel_2.add(Id_Label);
@@ -115,36 +101,29 @@ public class Custom_Info extends JInternalFrame {
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		panel.add(panel_3);
 		
-		JLabel Phone_Label = new JLabel("联系电话：");
+		JLabel Phone_Label = new JLabel("单价：");
 		panel_3.add(Phone_Label);
 		
-		Phone_textField = new JTextField();
-		panel_3.add(Phone_textField);
-		Phone_textField.setColumns(18);
+		Price_spinner = new JSpinner();
+		Price_spinner.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+		panel_3.add(Price_spinner);
 		
 		JPanel panel_4 = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panel_4.getLayout();
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		panel.add(panel_4);
 		
-		JLabel Address_Label = new JLabel("联系地址：");
+		JLabel Address_Label = new JLabel("类型：");
 		panel_4.add(Address_Label);
 		
-		Address_textField = new JTextField();
-		panel_4.add(Address_textField);
-		Address_textField.setColumns(50);
+		Type_textField = new JTextField();
+		panel_4.add(Type_textField);
+		Type_textField.setColumns(20);
 		
 		JPanel panel_5 = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panel_5.getLayout();
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		panel.add(panel_5);
-		
-		JLabel Remark_Label = new JLabel("备    注：");
-		panel_5.add(Remark_Label);
-		
-		Remark_textField = new JTextField();
-		panel_5.add(Remark_textField);
-		Remark_textField.setColumns(80);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -154,7 +133,7 @@ public class Custom_Info extends JInternalFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"编号", "公司名", "首拼", "联系人", "联系电话", "联系地址", "备注"
+					"编号", "加工名称","单价", "类型"
 				}
 			);
 		
@@ -200,7 +179,7 @@ public class Custom_Info extends JInternalFrame {
     //加载表信息
     public void Load_Table(){
     	tableModel.setRowCount(0);
-    	List list = Dao.getKhInfos();
+    	List list = Dao.getMachineInfo("");
 		Iterator iterator=list.iterator();
 		updateTable(iterator, tableModel);
     }
@@ -240,17 +219,14 @@ public class Custom_Info extends JInternalFrame {
   					String Id=(String)(tableModel.getValueAt(row,0)); 
   					EID_Label.setText(Id);
   					String name=(String)(tableModel.getValueAt(row,1)); 
-  					CName_textField.setText(name);
-  					String py=(String)(tableModel.getValueAt(row,2)); 
-  					PY_textField.setText(py);
-  					String contacts=(String)(tableModel.getValueAt(row,3)); 
-  					Contact_textField.setText(contacts);
-  					String phone=(String)(tableModel.getValueAt(row,4)); 
-  					Phone_textField.setText(phone);
-  					String address=(String)(tableModel.getValueAt(row,5));
-  					Address_textField.setText(address);
-  					String remark=(String)(tableModel.getValueAt(row,6));
-  					Remark_textField.setText(remark);
+  					MName_textField.setText(name);
+  					String price = (String)(tableModel.getValueAt(row,2)); 
+  					
+  					Price_spinner.setValue(Double.valueOf(price));
+  				
+  					String type=(String)(tableModel.getValueAt(row,3));
+  					Type_textField.setText(type);
+  					
   					
 				}
 			}
@@ -264,12 +240,11 @@ public class Custom_Info extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				CName_textField.setText("");
-				PY_textField.setText("");
-				Contact_textField.setText("");
-				Address_textField.setText("");
-				Remark_textField.setText("");
-				Phone_textField.setText("");
+				MName_textField.setText("");
+			
+				Type_textField.setText("");
+				
+				
 				int tid=(Integer.valueOf(tableModel.getValueAt(tableModel.getRowCount()-1, 0).toString())+1);
 				String id = String.valueOf(tid);
 				EID_Label.setText(id);
@@ -285,18 +260,16 @@ public class Custom_Info extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String id=EID_Label.getText();
-				String cname = CName_textField.getText();
-				String contacts = Contact_textField.getText();
-				String address = Address_textField.getText();
-				String phone = Phone_textField.getText();
-				String remark =Remark_textField.getText();
-				String py =PY_textField.getText();
+				String cname = MName_textField.getText();
+				double Price = Double.valueOf(Price_spinner.getValue().toString());
+				String type = Type_textField.getText();
+				
 				
 				if (id==""){
 					JOptionPane.showMessageDialog(null, "无数据 可保存", "提示",JOptionPane.CLOSED_OPTION);
 				}else{
-					Company company = new Company(Integer.valueOf(id),cname,contacts,address,phone,remark,py);
-					boolean rs=Dao.addCompany(company);
+					Machine machine = new Machine(Integer.valueOf(id),cname,Price,type);
+					boolean rs=Dao.addMachining(machine);
 					if (rs==true){
 						JOptionPane.showMessageDialog(null, "保存成功", "提示",JOptionPane.CLOSED_OPTION);
 						Load_Table();
@@ -321,4 +294,5 @@ public class Custom_Info extends JInternalFrame {
 		});
     	
     }
+
 }

@@ -37,15 +37,7 @@ public class Sale_Dialog_Size extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-//		try {
-//			Sale_Dialog_Size dialog = new Sale_Dialog_Size(map);
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	}
+
 
 	/**
 	 * Create the dialog.
@@ -98,10 +90,10 @@ public class Sale_Dialog_Size extends JDialog {
 		{
 			tablemodel= new DefaultTableModel(
 					new Object[][] {
-						{null, null, null}
+						{null, null, null,null}
 					},
 					new String[] {
-								"长","宽","数量"
+								"长","宽","数量","备注"
 					}
 				);
 				
@@ -127,9 +119,13 @@ public class Sale_Dialog_Size extends JDialog {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						table.getCellEditor().stopCellEditing();
+						if (table.getCellEditor() != null){
+							table.getCellEditor().stopCellEditing();
+							
+						}
 						sale.addData(AddData());
 						Sale_Dialog_Size.this.dispose();  //关闭窗口
+						
 					}
 				});
 				getRootPane().setDefaultButton(okButton);
@@ -174,6 +170,11 @@ public class Sale_Dialog_Size extends JDialog {
 	      numdata.add(tablemodel.getValueAt(count, 0).toString());
 	      numdata.add(tablemodel.getValueAt(count, 1).toString());
 	      numdata.add(tablemodel.getValueAt(count, 2).toString());
+	      if (tablemodel.getValueAt(count, 3)==(null)){
+	    	  tablemodel.setValueAt(" ", count, 3);
+	      }
+	      numdata.add(tablemodel.getValueAt(count, 3).toString());
+	      
 	    }
  
 	    return numdata;

@@ -24,7 +24,8 @@ public class Home {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try{
-					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+				
+					 UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 				}catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -86,6 +87,43 @@ public class Home {
 		
 		JMenuItem menuItem_2 = new JMenuItem("商品资料");
 		mnNewMenu.add(menuItem_2);
+		
+		
+		
+		menuItem_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Product product=new Product();
+				desktopPane.add(product);
+				product.setMaximumSize(desktopPane.getMaximumSize());
+				try {
+					product.setMaximum(true);
+				} catch (PropertyVetoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		JMenuItem MachMenuItem = new JMenuItem("加工资料");
+		mnNewMenu.add(MachMenuItem);
+		MachMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Machine_Info machine=new Machine_Info();
+				desktopPane.add(machine);
+				machine.setMaximumSize(desktopPane.getMaximumSize());
+				try {
+					machine.setMaximum(true);
+				} catch (PropertyVetoException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+			}
+		});
 		
 		JMenu menu = new JMenu("业务");
 		menuBar.add(menu);

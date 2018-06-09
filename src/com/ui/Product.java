@@ -1,19 +1,8 @@
 package com.ui;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import com.dao.bean.Company;
-import com.dao.conn.Dao;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,22 +12,41 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
-public class Custom_Info extends JInternalFrame {
+import com.dao.bean.Company;
+import com.dao.bean.Goods;
+import com.dao.conn.Dao;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JCheckBox;
+
+public class Product extends JInternalFrame {
+
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private JTextField CName_textField;
-	private JTextField Contact_textField;
+	private JTextField GName_textField;
 	private JTextField PY_textField;
-	private JTextField Phone_textField;
-	private JTextField Address_textField;
+	private JTextField Type_textField;
 	private JTextField Remark_textField;
 	private JLabel EID_Label;
 	private JButton NUserButton;
 	private JButton ColseButton;
 	private JButton SaveButton;
+	private JSpinner Price_spinner;
+	private JTextField specs_textField;
+	private JTextField Price_textField;
+	private JCheckBox is_checkBox;
+	
 
 	/**
 	 * Launch the application.
@@ -48,7 +56,7 @@ public class Custom_Info extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Custom_Info() {
+	public Product() {
 		//初始化
 		initialize();
 		
@@ -83,12 +91,12 @@ public class Custom_Info extends JInternalFrame {
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panel.add(panel_2);
 		
-		JLabel CName_Lable = new JLabel("公司名称：");
-		panel_2.add(CName_Lable);
+		JLabel GName_Lable = new JLabel("商品名称：");
+		panel_2.add(GName_Lable);
 		
-		CName_textField = new JTextField();
-		panel_2.add(CName_textField);
-		CName_textField.setColumns(40);
+		GName_textField = new JTextField();
+		panel_2.add(GName_textField);
+		GName_textField.setColumns(40);
 		
 		JLabel PY_Label = new JLabel("拼音：");
 		panel_2.add(PY_Label);
@@ -96,13 +104,6 @@ public class Custom_Info extends JInternalFrame {
 		PY_textField = new JTextField();
 		panel_2.add(PY_textField);
 		PY_textField.setColumns(10);
-		
-		JLabel Contact_Label = new JLabel("联系人：");
-		panel_2.add(Contact_Label);
-		
-		Contact_textField = new JTextField();
-		panel_2.add(Contact_textField);
-		Contact_textField.setColumns(10);
 		
 		JLabel Id_Label = new JLabel("编号:");
 		panel_2.add(Id_Label);
@@ -115,24 +116,35 @@ public class Custom_Info extends JInternalFrame {
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		panel.add(panel_3);
 		
-		JLabel Phone_Label = new JLabel("联系电话：");
-		panel_3.add(Phone_Label);
+		JLabel Price_Label = new JLabel("价    格：");
+		panel_3.add(Price_Label);
 		
-		Phone_textField = new JTextField();
-		panel_3.add(Phone_textField);
-		Phone_textField.setColumns(18);
+		Price_spinner = new JSpinner();
+		Price_spinner.setModel(new SpinnerNumberModel(new Float(0), new Float(0), new Float(10000), new Float(1)));
+		panel_3.add(Price_spinner);
+		
+		JLabel label = new JLabel("规格：");
+		panel_3.add(label);
+		
+		specs_textField = new JTextField();
+		panel_3.add(specs_textField);
+		specs_textField.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panel_4.getLayout();
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		panel.add(panel_4);
 		
-		JLabel Address_Label = new JLabel("联系地址：");
-		panel_4.add(Address_Label);
+		JLabel type_Label = new JLabel("类    型：");
+		panel_4.add(type_Label);
 		
-		Address_textField = new JTextField();
-		panel_4.add(Address_textField);
-		Address_textField.setColumns(50);
+		Type_textField = new JTextField();
+		panel_4.add(Type_textField);
+		Type_textField.setColumns(20);
+		
+		is_checkBox = new JCheckBox("是否有效");
+		is_checkBox.setSelected(true);
+		panel_4.add(is_checkBox);
 		
 		JPanel panel_5 = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panel_5.getLayout();
@@ -154,7 +166,7 @@ public class Custom_Info extends JInternalFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"编号", "公司名", "首拼", "联系人", "联系电话", "联系地址", "备注"
+					"编号", "商品名称", "单价", "规格", "类型","是否有效","首拼", "备注"
 				}
 			);
 		
@@ -163,6 +175,7 @@ public class Custom_Info extends JInternalFrame {
 	             return false;
 	            }
 		};
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setEnabled(true);
 		table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setColumnHeaderView(table);
@@ -200,7 +213,7 @@ public class Custom_Info extends JInternalFrame {
     //加载表信息
     public void Load_Table(){
     	tableModel.setRowCount(0);
-    	List list = Dao.getKhInfos();
+    	List list = Dao.getspInfos1();
 		Iterator iterator=list.iterator();
 		updateTable(iterator, tableModel);
     }
@@ -238,18 +251,29 @@ public class Custom_Info extends JInternalFrame {
 				if( e.getClickCount()==2){
   					int row =((JTable)e.getSource()).rowAtPoint(e.getPoint()); //获得行位置 
   					String Id=(String)(tableModel.getValueAt(row,0)); 
-  					EID_Label.setText(Id);
+  					EID_Label.setText(Id);  //编号
   					String name=(String)(tableModel.getValueAt(row,1)); 
-  					CName_textField.setText(name);
-  					String py=(String)(tableModel.getValueAt(row,2)); 
-  					PY_textField.setText(py);
-  					String contacts=(String)(tableModel.getValueAt(row,3)); 
-  					Contact_textField.setText(contacts);
-  					String phone=(String)(tableModel.getValueAt(row,4)); 
-  					Phone_textField.setText(phone);
-  					String address=(String)(tableModel.getValueAt(row,5));
-  					Address_textField.setText(address);
-  					String remark=(String)(tableModel.getValueAt(row,6));
+  					GName_textField.setText(name);  //商品名称
+  					String price=(String)(tableModel.getValueAt(row,2)); 
+  					Price_spinner.setValue(Double.valueOf(price));//单价
+  					String specs=(String)(tableModel.getValueAt(row,3));
+  					specs_textField.setText(specs);  //规格
+  					String type=(String)(tableModel.getValueAt(row,4));
+  					Type_textField.setText(type);  //类型
+  					
+  					String isable=(String)(tableModel.getValueAt(row,5));
+  				
+  					if (isable.equals("0")){
+  						is_checkBox.setSelected(true);
+  				
+  					}else {
+  						is_checkBox.setSelected(false);
+  					}// 判断有效
+  					
+  					String py=(String)(tableModel.getValueAt(row,6)); 
+  					PY_textField.setText(py);   //py
+  					
+  					String remark=(String)(tableModel.getValueAt(row,7));
   					Remark_textField.setText(remark);
   					
 				}
@@ -264,15 +288,15 @@ public class Custom_Info extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				CName_textField.setText("");
+				GName_textField.setText("");
 				PY_textField.setText("");
-				Contact_textField.setText("");
-				Address_textField.setText("");
+				Type_textField.setText("");
 				Remark_textField.setText("");
-				Phone_textField.setText("");
+				Price_spinner.setValue(0);
 				int tid=(Integer.valueOf(tableModel.getValueAt(tableModel.getRowCount()-1, 0).toString())+1);
 				String id = String.valueOf(tid);
 				EID_Label.setText(id);
+				is_checkBox.setSelected(true);
 				
 			}
 		});
@@ -285,18 +309,25 @@ public class Custom_Info extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String id=EID_Label.getText();
-				String cname = CName_textField.getText();
-				String contacts = Contact_textField.getText();
-				String address = Address_textField.getText();
-				String phone = Phone_textField.getText();
+				String Gname = GName_textField.getText();
+				String able;
+		        boolean isable=is_checkBox.isSelected();
+		        if (isable==true){
+		        	able="0";
+		        }else {
+		        	able="1";
+		        }
+				String Type = Type_textField.getText();
+				String Price = Price_spinner.getValue().toString();
+				String specs = specs_textField.getText();
 				String remark =Remark_textField.getText();
 				String py =PY_textField.getText();
 				
 				if (id==""){
 					JOptionPane.showMessageDialog(null, "无数据 可保存", "提示",JOptionPane.CLOSED_OPTION);
 				}else{
-					Company company = new Company(Integer.valueOf(id),cname,contacts,address,phone,remark,py);
-					boolean rs=Dao.addCompany(company);
+					Goods goods = new Goods(Integer.valueOf(id),Gname,Price,specs,"00",Type,able,remark,py);
+					boolean rs=Dao.addProduct(goods);
 					if (rs==true){
 						JOptionPane.showMessageDialog(null, "保存成功", "提示",JOptionPane.CLOSED_OPTION);
 						Load_Table();

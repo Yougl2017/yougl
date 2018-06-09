@@ -46,18 +46,7 @@ public class SaleMain extends JInternalFrame {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					SaleMain frame = new SaleMain();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+
 
 	/**
 	 * Create the frame.
@@ -66,6 +55,7 @@ public class SaleMain extends JInternalFrame {
 		initialize();
 		DoublePrint();
 		NewAction();
+		Select_Info();
 
 	}
 	
@@ -133,6 +123,20 @@ public class SaleMain extends JInternalFrame {
     	
     }
     //查询信息
+    public void Select_Info(){
+    	SelectButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				List list = Dao.getPInfos();
+				Iterator iterator=list.iterator();
+				updateTable(iterator, tablemodel);
+			}
+		});
+    	
+    }
+    //加载信息
     private void updateTable(Iterator iterator, final DefaultTableModel dftm) {
 		int num = dftm.getRowCount();
 		for (int i = 0; i < num; i++){

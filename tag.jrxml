@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tag" language="groovy" printOrder="Horizontal" pageWidth="113" pageHeight="85" columnWidth="111" leftMargin="1" rightMargin="1" topMargin="1" bottomMargin="1" uuid="6bedc1df-55dd-4bba-afb7-d111f001d12d">
+	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="129"/>
+	<queryString>
+		<![CDATA[select * from printremark]]>
+	</queryString>
+	<field name="xh" class="java.lang.Integer"/>
+	<field name="zid" class="java.lang.String"/>
+	<field name="company" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="gg" class="java.lang.String"/>
+	<field name="sl" class="java.lang.Integer"/>
+	<field name="remark" class="java.lang.String"/>
+	<columnHeader>
+		<band height="17">
+			<textField>
+				<reportElement x="65" y="0" width="46" height="10" uuid="4cd97936-0d0b-416d-a2d7-41182b8fc033"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="0" width="57" height="17" uuid="e05971e7-98ff-462c-953c-852fd67ab775"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<textField>
+				<reportElement x="8" y="21" width="99" height="20" uuid="67b57a24-7d03-4007-a8a4-f36bce9c4a5d"/>
+				<textElement verticalAlignment="Top">
+					<font size="14" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="41" width="99" height="15" uuid="e5417862-addd-42f2-aedd-5f6b7fe0fbb1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="0" width="99" height="21" uuid="9ea0e69c-7f34-4b8e-9c94-e8c55ca202e8"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10">
+			<staticText>
+				<reportElement x="81" y="0" width="26" height="10" uuid="a45912e0-f0c3-4030-9557-d8f3ca184c5b"/>
+				<textElement>
+					<font size="6" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[环华玻璃]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

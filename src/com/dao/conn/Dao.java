@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import com.dao.bean.Company;
 import com.dao.bean.Goods;
+import com.dao.bean.Machine;
 import com.dao.bean.Sale;
 import com.dao.bean.SaleDetail;
 import com.dao.bean.TempSaleDetail;
@@ -70,11 +71,23 @@ public class Dao {
 	}
 	//获取商品信息
 	public static List getspInfos(){
-		List list = findForList("select goods_id,Goods_name "
+		List list = findForList("select goods_id,goods_name,goods_price,goods_specs ,goods_type,goods_isusable,goods_py,goods_remark "
 				+ "from goods where Goods_isusable=0 ");
 		return list;
 		
 	}
+	public static List getspInfos1(){
+		List list = findForList("select goods_id,goods_name,goods_price,goods_specs ,goods_type,goods_isusable,goods_py,goods_remark "
+				+ "from goods ");
+		return list;
+		
+	}
+	//获取加工信息
+	public static List getMachineInfo(String sql){
+		List list=findForList("select id,name,price,type from Machine where type like'%"+sql+"%'");
+		return list;
+	}
+	
 	//获取客户信息
 	public static Company getkhInfo(Item item){
 		String where = "Company_Name='"+item.getName()+"'";
@@ -110,12 +123,36 @@ public class Dao {
 			ResultSet set = findForResultSet("select Goods_id,goods_name,goods_price,goods_typeid,goods_type,goods_isusable,goods_remark from goods where "+where);
 			try {
 				if (set.next()){
-					info.setGoodsId(set.getString("Goods_id").trim());
+					info.setGoodsId(set.getInt("Goods_id"));
 					info.setGoodsName(set.getString("goods_name").trim());
 					info.setGoodsPrice(set.getString("goods_price").trim());
 					info.setGoodsTypeid(set.getString("goods_typeid").trim());
 					info.setGoodsIsusable(set.getString("goods_isusable"));
 					info.setGoodsRemark(set.getString("company_ramark").trim());
+					
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return info;
+			
+		}
+		//获得加工信息
+		public static Machine getMachineInfo(Item item){
+			String where = "name='"+item.getName()+"'";
+			if (item.getId()!=null){
+				where = "id='"+item.getId()+"'";
+			}
+			Machine info =new Machine();
+			ResultSet set = findForResultSet("select id,name,price,type from dbo.Machine where "+where);
+			try {
+				if (set.next()){
+					info.setId(set.getInt("id"));
+					info.setName(set.getString("name").trim());
+					info.setPrice(set.getDouble("price"));
+					info.setType(set.getString("type").trim());
+	
 					
 				}
 				
@@ -189,8 +226,17 @@ public class Dao {
 		if (sale==null){
 			return false;
 		}
-		
 		return exec("{call usp_print_action(?,?,?,?,?)}",sale.getLsh(),sale.getSgs(),sale.getName(),sale.getSphone(),sale.getAddress());
+		 
+		
+	}
+	//插入标签日期
+	public static boolean addRemark(Sale sale){
+		if (sale==null){
+			return false;
+		}
+		return exec("{call usp_print_remark(?)}",sale.getLsh());
+		
 		
 	}
 	//插入用户信息
@@ -202,8 +248,31 @@ public class Dao {
 		return exec("{call usp_edit_company(?,?,?,?,?,?,?)}",company.getCompanyId(),company.getCompanyName(),company.getCompanyContacts(),company.getCompanyPhone(),company.getCompanyAddress(),company.getCompanyRamark(),company.getCompanyPy());
 		
 	}
+    //插入商品信息
+	public static boolean addProduct(Goods goods){
+		
+		if (goods==null){
+			return false;
+		}
+		
+		return exec("{call usp_edit_goods(?,?,?,?,?,?,?,?,?)}",goods.getGoodsId(),goods.getGoodsName(),goods.getGoodsPrice(),
+				    goods.getGoodsSpecs(),goods.getGoodsTypeid(),goods.getGoodsType(),goods.getGoodsIsusable(),goods.getGoodsRemark()
+				    ,goods.getGoodsPy());
+		
+		
+	}
+	
+
+	public static boolean addMachining(Machine machine){
+		if (machine==null){
+			return false;
+		}
+		return exec("{call usp_edit_machine(?,?,?,?)}",machine.getId(),machine.getName(),machine.getPrice(),machine.getType());
+	}
+	//插入加工信息
 	
 	
+
 	//删除信息
 	public static int delete(String sql) {
 		return update(sql);
@@ -381,7 +450,61 @@ public class Dao {
 		}
 		return false;
 	}
-	
+	//处理商品信息存储过程
+	private static boolean exec(String sql, int goodsId, String goodsName, String goodsPrice, String goodsSpecs,
+			String goodsTypeid, String goodsType, String goodsIsusable, String goodsRemark, String goodsPy) {
+		// TODO Auto-generated method stub
+		boolean result = false;
+		try{
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1,goodsId);
+			cstmt.setString(2,goodsName);
+			cstmt.setString(3, goodsPrice);
+			cstmt.setString(4, goodsSpecs);
+			cstmt.setString(5, goodsTypeid);
+			cstmt.setString(6, goodsType);
+			cstmt.setString(7, goodsIsusable);
+			cstmt.setString(8, goodsRemark);
+			cstmt.setString(9, goodsPy);
+			cstmt.execute();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
+	// 加工信息
+	private static boolean exec(String string, Integer id, String name, double price, String type) {
+		// TODO Auto-generated method stub
+		boolean result = false;
+		try{
+			CallableStatement cstmt = conn.prepareCall(string);
+			cstmt.setInt(1,id);
+			cstmt.setString(2,name);
+			cstmt.setDouble(3, price);
+			cstmt.setString(4, type);
+			cstmt.execute();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
+	//标签存储过程处理
+	public static boolean exec(String sql,String zblsh){
+		boolean result = false;
+		try{
+			CallableStatement cstmt = conn.prepareCall(sql);
+			cstmt.setString(1,zblsh);
+			cstmt.execute();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
 	
 	public static int update(String sql) {
 		int result = 0;

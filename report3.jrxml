@@ -29,7 +29,7 @@
 		<band height="140">
 			<staticText>
 				<reportElement x="52" y="74" width="269" height="20" uuid="3a618df5-9a8a-4ac5-b7e1-1ed1d90c71c3"/>
-				<text><![CDATA[地址：深圳市龙华工业路龙胜工业区11栋102]]></text>
+				<text><![CDATA[地址：深圳市龙华区大浪华明路1号（华澜万海物流园内）]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="50" y="94" width="613" height="20" uuid="ea1a3875-19d1-49c1-976b-7183f5449d43"/>
