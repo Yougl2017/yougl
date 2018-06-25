@@ -200,7 +200,7 @@ public class Custom_Info extends JInternalFrame {
     //加载表信息
     public void Load_Table(){
     	tableModel.setRowCount(0);
-    	List list = Dao.getKhInfos();
+    	List list = Dao.getKhInfos("");
 		Iterator iterator=list.iterator();
 		updateTable(iterator, tableModel);
     }

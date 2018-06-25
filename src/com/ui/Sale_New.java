@@ -8,12 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -35,6 +39,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import com.dao.bean.Goods;
 import com.dao.bean.Machine;
 import com.dao.bean.Sale;
@@ -52,6 +58,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import javax.swing.SpinnerNumberModel;
 
 public class Sale_New extends JFrame {
 
@@ -86,10 +93,8 @@ public class Sale_New extends JFrame {
 	private JComboBox<Item> zk_comboBox;  //钻孔类型
 	private JComboBox<Item> kk_comboBox;  //开口类型
 	private JPopupMenu del_popupMenu;   //删除菜单
-
-	/**
-	 * Launch the application.
-	 */
+	private JCheckBox checkBox;
+	private JSpinner spinner;
 
 
 	/**
@@ -131,7 +136,7 @@ public class Sale_New extends JFrame {
 				scrollPane.setColumnHeaderView(table);
 				scrollPane.setViewportView(table);
 				table.getTableHeader().setReorderingAllowed(false); //不支持重新排列
-				table.setEnabled(false);
+				table.setEnabled(false); //不可编辑
 				
 			  
 			}
@@ -262,6 +267,16 @@ public class Sale_New extends JFrame {
 				
 				kk_spinner = new JSpinner();
 				panel.add(kk_spinner);
+				{
+					checkBox = new JCheckBox("按个数计算");
+					//panel.add(checkBox);
+				}
+				{
+					spinner = new JSpinner();
+					spinner.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+					spinner.setEnabled(false);
+					//panel.add(spinner);
+				}
 				
 			}
 			
@@ -291,13 +306,17 @@ public class Sale_New extends JFrame {
 			
 		}
 		//加载客户信息
-		Load_Customer_Info();
+		Load_Customer_Info("");
 		//加载商品信息
-		Load_Product_Info();
+		Load_Product_Info("");
 		//加载备注信息
 		Combox_Action();
 		//加载加工信息
 		isselect();
+		//检索
+		//Customer_method();
+		Saler_method();
+		Goods_method();
 		//添加尺寸
 		Add_Size_Info();
 		//打印
@@ -307,14 +326,17 @@ public class Sale_New extends JFrame {
 		//关闭
 		Close_Info();
 	}
-    //加载客户信息
-	public void Load_Customer_Info(){
-		List getkhInfos = Dao.getKhInfos();
+   
+	//加载客户信息
+	public void Load_Customer_Info(String str){
+		sale_comboBox.removeAllItems();
+		List getkhInfos = Dao.getKhInfos(str);
 		for (Iterator iter = getkhInfos.iterator(); iter.hasNext();) {
 			List list = (List) iter.next();
 			Item item = new Item();
 			item.setId(list.get(0).toString().trim());
 			item.setName(list.get(1).toString().trim());
+			item.setPy(list.get(2).toString().trim());
 			sale_comboBox.addItem(item);
 			sale_comboBox.setEditable(true);
 			sale_comboBox.setSelectedIndex(-1);
@@ -322,12 +344,13 @@ public class Sale_New extends JFrame {
 		}
 	}
 	//加载商品信息
-	public void Load_Product_Info(){
-		List getspInfos = Dao.getspInfos();
+	public void Load_Product_Info(String str){
+		Prc_comboBox.removeAllItems();
+		List getspInfos = Dao.getspInfos(str);
 		for (Iterator iter = getspInfos.iterator(); iter.hasNext();) {
 			List list = (List) iter.next();
 			Item item = new Item();
-			//item.setId(list.get(0).toString().trim());
+			item.setId(list.get(0).toString().trim());
 			item.setName(list.get(1).toString().trim());
 			Prc_comboBox.addItem(item);
 			Prc_comboBox.setSelectedIndex(-1);
@@ -418,7 +441,7 @@ public class Sale_New extends JFrame {
 		}
 		
 		Item zk_item=(Item)zk_comboBox.getSelectedItem();
-		if (kk_checkBox.isSelected()){
+		if (zk_checkBox.isSelected()){
 			zk_machine= Dao.getMachineInfo(zk_item);
 		}else{
 			
@@ -564,7 +587,19 @@ public class Sale_New extends JFrame {
 		zk_spinner.addChangeListener(clistener);
 		
 	}
-    //加载订单号
+    
+	//触发按个算计算
+	public void Combox_A_Sum(){
+		ItemListener itemlistener = new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+	}
+	//加载订单号
 	public String Load_ddh_Info(){
 		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 		String lsh = Dao.getSellMainMaxId(date);
@@ -794,4 +829,72 @@ public class Sale_New extends JFrame {
         });  
         del_popupMenu.add(delMenItem);  
     } 
+    
+    
+	//检索客户
+	private void Saler_method() {
+			//  Auto-generated method stub
+		
+		sale_comboBox.getEditor().getEditorComponent().addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				sale_comboBox.setPopupVisible(true);
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if ((e.getKeyCode()>=KeyEvent.VK_A && e.getKeyCode()<=KeyEvent.VK_Z) || e.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+					JTextField editor=(JTextField) sale_comboBox.getEditor().getEditorComponent();
+					String str= editor.getText();  
+					Load_Customer_Info(str);
+					sale_comboBox.setPopupVisible(true);
+					editor.setText(str);
+				}
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+			    
+			}
+		});
+	}
+	//检索产品
+	private void Goods_method() {
+		//  Auto-generated method stub
+	
+	    Prc_comboBox.getEditor().getEditorComponent().addKeyListener(new KeyListener() {
+		
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			Prc_comboBox.setPopupVisible(true);
+		}
+		
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if ((e.getKeyCode()>=KeyEvent.VK_0 && e.getKeyCode()<=KeyEvent.VK_9) ||(e.getKeyCode()>=KeyEvent.VK_NUMPAD0 && e.getKeyCode()<=KeyEvent.VK_NUMPAD9) || e.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+				JTextField editor=(JTextField) Prc_comboBox.getEditor().getEditorComponent();
+				String str= editor.getText();  
+				Load_Product_Info(str);
+				Prc_comboBox.setPopupVisible(true);
+				editor.setText(str);
+			}
+			
+		}
+		
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+		    
+		}
+	});
+}
+	
+	
 }

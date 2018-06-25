@@ -3,6 +3,7 @@ package com.other;
 public class Item {
 	private String id;
 	private String name;
+	private String py;
 	public Item() {
 	}
 	public Item(String id,String name) {
@@ -23,5 +24,11 @@ public class Item {
 	}
 	public String toString() {
 		return getName();
+	}
+	public String getPy() {
+		return py;
+	}
+	public void setPy(String py) {
+		this.py = py;
 	}
 }

@@ -65,14 +65,14 @@ public class Dao {
 	}*/
 	
 	// 客户信息
-	public static List getKhInfos() {
-		List list = findForList("select company_id,company_name,company_py,company_contacts,company_phone,company_address,company_ramark from company order by company_id ");
+	public static List getKhInfos(String str) {
+		List list = findForList("select company_id,company_name,company_py,company_contacts,company_phone,company_address,company_ramark from company where company_py like '"+str+"%' order by company_id ");
 		return list;
 	}
 	//获取商品信息
-	public static List getspInfos(){
+	public static List getspInfos(String str){
 		List list = findForList("select goods_id,goods_name,goods_price,goods_specs ,goods_type,goods_isusable,goods_py,goods_remark "
-				+ "from goods where Goods_isusable=0 ");
+				+ "from goods where Goods_isusable=0 and goods_name like '"+str+"%'");
 		return list;
 		
 	}
