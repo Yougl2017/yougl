@@ -93,8 +93,8 @@ public class Sale_New extends JFrame {
 	private JComboBox<Item> zk_comboBox;  //钻孔类型
 	private JComboBox<Item> kk_comboBox;  //开口类型
 	private JPopupMenu del_popupMenu;   //删除菜单
-	private JCheckBox checkBox;
-	private JSpinner spinner;
+	private JCheckBox checkBox;        //按个数计算
+	private JSpinner spinner;          //按个数价
 
 
 	/**
@@ -269,13 +269,13 @@ public class Sale_New extends JFrame {
 				panel.add(kk_spinner);
 				{
 					checkBox = new JCheckBox("按个数计算");
-					//panel.add(checkBox);
+					panel.add(checkBox);
 				}
 				{
 					spinner = new JSpinner();
 					spinner.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
-					spinner.setEnabled(false);
-					//panel.add(spinner);
+					// spinner.setEnabled(false);
+					panel.add(spinner);
 				}
 				
 			}
@@ -461,7 +461,13 @@ public class Sale_New extends JFrame {
 			list_info.add(Goods.getGoodsName());      //1产品
 			list_info.add((String) list.get(i));      //2长
 			list_info.add((String) list.get(i+1));   //3宽
-			list_info.add(Goods.getGoodsPrice());    //4单价
+			if (checkBox.isSelected()){
+				list_info.add(spinner.getValue().toString());//4单价--按个数
+				
+			}else{
+				list_info.add(Goods.getGoodsPrice());    //4单价
+			}
+			
 			list_info.add("㎡");                     //5单位
 			list_info.add((String) list.get(i+2));  //6数量
 			
@@ -480,8 +486,15 @@ public class Sale_New extends JFrame {
 			
 			
 			list_info.add(temp);  //7面积
-			String temp_count=String.valueOf(String.format("%.2f",Double.parseDouble(Goods.getGoodsPrice())*
-					Double.parseDouble(temp)));
+			String temp_count;
+			if (checkBox.isSelected()){
+				temp_count=String.valueOf(String.format("%.2f",Double.parseDouble(spinner.getValue().toString())*
+						Double.parseDouble((String) list.get(i+2))));
+			}else{
+				temp_count=String.valueOf(String.format("%.2f",Double.parseDouble(Goods.getGoodsPrice())*
+						Double.parseDouble(temp)));
+			}
+			
 			list_info.add(temp_count);  //8玻璃金额
 			
 			String temp_long=String.valueOf(String.format("%.2f",Double.parseDouble((String)list.get(i))*2*0.001+
@@ -489,7 +502,12 @@ public class Sale_New extends JFrame {
 			
 			list_info.add(temp_long);    //9周长
 			
-			list_info.add(String.valueOf(machine.getPrice())); //10磨边单价
+			if (checkBox.isSelected()){
+				list_info.add("0.0");
+			}else{
+				list_info.add(String.valueOf(machine.getPrice())); //10磨边单价
+			}
+			
 			 
 			
 			String temp_mb;
@@ -519,12 +537,16 @@ public class Sale_New extends JFrame {
 				temp_mb="0.00";
 			}
 			
-			temp_mb=String.valueOf(Double.valueOf(temp_mb)*Double.valueOf(list.get(i+2).toString()));
+			temp_mb=String.valueOf(String.format("%.2f",Double.valueOf(temp_mb)*Double.valueOf(list.get(i+2).toString())));
 	
 			
 			list_info.add(temp_mb); // 11磨边
+			if (checkBox.isSelected()){
+				list_info.add("0.0");
+			}else{
+				list_info.add(String.valueOf(String.format("%.2f",kk_machine.getPrice())));  //12开口单价
+			}
 			
-			list_info.add(String.valueOf(kk_machine.getPrice()));  //12开口单价
 			String temp_kk;
 			if (kk_checkBox.isSelected()){
 				temp_kk=String.valueOf(Integer.valueOf(kk_spinner.getValue().toString())*Integer.valueOf(list.get(i+2).toString()));
@@ -536,8 +558,13 @@ public class Sale_New extends JFrame {
 			
 			list_info.add(temp_kk);  //13开口
 			
+			if (checkBox.isSelected()){
+				list_info.add("0.0");
+			}else{
+				list_info.add(String.valueOf(zk_machine.getPrice())); //14钻孔单价
+			}
 			
-			list_info.add(String.valueOf(zk_machine.getPrice())); //14钻孔单价
+			
 			String temp_zk;
 			if (zk_checkBox.isSelected()){
 				temp_zk=String.valueOf(Integer.valueOf(zk_spinner.getValue().toString())*Integer.valueOf(list.get(i+2).toString()));
@@ -547,8 +574,13 @@ public class Sale_New extends JFrame {
 			}
 			
 			list_info.add(temp_zk);  //15 钻孔
-			
-			String temp_sum=String.valueOf(String.format("%.2f",Double.parseDouble(temp_count)+Double.parseDouble(temp_mb)*machine.getPrice()+Double.parseDouble(temp_kk)*kk_machine.getPrice()+Double.parseDouble(temp_zk)*zk_machine.getPrice()));
+			String temp_sum;
+			if (checkBox.isSelected()){
+				temp_sum=temp_count; 
+			}else{
+				temp_sum=String.valueOf(String.format("%.2f",Double.parseDouble(temp_count)+Double.parseDouble(temp_mb)*machine.getPrice()+Double.parseDouble(temp_kk)*kk_machine.getPrice()+Double.parseDouble(temp_zk)*zk_machine.getPrice()));
+				
+			}
 			
 			list_info.add(temp_sum);  //总金额
 			
