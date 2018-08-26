@@ -10,6 +10,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -154,7 +156,7 @@ public class Sale_New extends JFrame {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
+						
 						Save_Info();
 					}
 				});
@@ -163,10 +165,12 @@ public class Sale_New extends JFrame {
 			}
 			{
 				printButton = new JButton("打印");
+				printButton.setEnabled(false);
 				buttonPane.add(printButton);
 			}
 			{
 				RemarkButton = new JButton("标签打印");
+				RemarkButton.setEnabled(false);
 				buttonPane.add(RemarkButton);
 			}
 			{
@@ -274,7 +278,7 @@ public class Sale_New extends JFrame {
 				{
 					spinner = new JSpinner();
 					spinner.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
-					// spinner.setEnabled(false);
+					spinner.setEnabled(false);
 					panel.add(spinner);
 				}
 				
@@ -386,7 +390,7 @@ public class Sale_New extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					//  Auto-generated method stub
 					if (Prc_comboBox.getSelectedIndex()==-1||sale_comboBox.getSelectedIndex()==-1||Prc_comboBox.getSelectedItem().toString()==""||sale_comboBox.getSelectedItem().toString()=="")
 					{
 						JOptionPane.showMessageDialog(null, "商品或客户不为空", "提示",JOptionPane.CLOSED_OPTION);
@@ -598,7 +602,7 @@ public class Sale_New extends JFrame {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
+				//  Auto-generated method stub
 				ramark_textField.setText(Load_Remark_Info());
 			}
 		};
@@ -606,7 +610,7 @@ public class Sale_New extends JFrame {
 			
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				// TODO Auto-generated method stub
+				//  Auto-generated method stub
 				ramark_textField.setText(Load_Remark_Info());
 			}
 		};
@@ -620,17 +624,6 @@ public class Sale_New extends JFrame {
 		
 	}
     
-	//触发按个算计算
-	public void Combox_A_Sum(){
-		ItemListener itemlistener = new ItemListener() {
-			
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
-	}
 	//加载订单号
 	public String Load_ddh_Info(){
 		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
@@ -642,8 +635,8 @@ public class Sale_New extends JFrame {
 		if (issave==0){
 			InsertDate();
 			JOptionPane.showMessageDialog(null, "保存成功", "提示",JOptionPane.CLOSED_OPTION);
-			sale_comboBox.setEnabled(false);
-			Prc_comboBox.setEnabled(false);
+			lock_method();//不可编辑
+			
 			++issave;
 			okButton.setEnabled(false);
 		}else {
@@ -704,18 +697,37 @@ public class Sale_New extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String lsh = Label_ddh.getText();
+				int i=0;
 				JasperDesign jasperDesign;
 					try {
-						jasperDesign = JRXmlLoader.load("report3.jrxml");
-					
-			    	JasperReport jasperReport=JasperCompileManager.compileReport(jasperDesign);
-			    	HashMap p=new HashMap();
-			    	p.put("name", "郑泽游");
-			    	JRResultSetDataSource rsd= new JRResultSetDataSource(Dao.query("select sgs,sphone,name,zblsh,dname,dw,dj,gg,sl,zje,bz,zsl,mj from printdate where zblsh='"+lsh+"'"));
-			    	JasperPrint  jasperprint=JasperFillManager.fillReport(jasperReport, p,rsd);
-			    	JasperViewer  jr=new JasperViewer (jasperprint,false);
-			    	jr.setVisible(true);
-			    	jr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						
+						//小于等于8行
+						ResultSet  re=Dao.query("select count(1) from printdate where zblsh='"+lsh+"'");
+						try {
+							while(re.next()){
+								i=re.getInt(1);
+							}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						if (i<=8){
+							jasperDesign = JRXmlLoader.load("report3.jrxml");
+						}else{
+							jasperDesign = JRXmlLoader.load("Two.jrxml");
+							
+						}
+						
+						
+						
+			    	    JasperReport jasperReport=JasperCompileManager.compileReport(jasperDesign);
+			    	    HashMap p=new HashMap();
+			    	    p.put("name", "郑泽游");
+			    	    JRResultSetDataSource rsd= new JRResultSetDataSource(Dao.query("select sgs,sphone,name,zblsh,dname,dw,dj,gg,sl,zje,bz,zsl,mj from printdate where zblsh='"+lsh+"'"));
+			    	    JasperPrint  jasperprint=JasperFillManager.fillReport(jasperReport, p,rsd);
+			    	    JasperViewer  jr=new JasperViewer (jasperprint,false);
+			    	    jr.setVisible(true);
+			    	    jr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					}
 			    	catch (JRException e1) {
 						// TODO Auto-generated catch block
@@ -787,7 +799,7 @@ public class Sale_New extends JFrame {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
+				//  Auto-generated method stub
 				Object obj = e.getItem();
 				if (obj.equals(zb_CheckBox)){
 					if (zb_CheckBox.isSelected()){
@@ -831,10 +843,20 @@ public class Sale_New extends JFrame {
 					    Machin_Info("开口",kk_comboBox);
 					    kk_spinner.setEnabled(true);
 					}else {
-						kk_comboBox.setEnabled(true);
+						kk_comboBox.setEnabled(false);
 						kk_comboBox.removeAllItems();
 						kk_spinner.setEnabled(false);
 					}
+				}
+				//按个数结算
+				if (obj.equals(checkBox)){
+					if (checkBox.isSelected()){
+						//
+						spinner.setEnabled(true);
+					}else {
+						spinner.setEnabled(false);
+					}
+					
 				}
 			}
 		};
@@ -842,6 +864,7 @@ public class Sale_New extends JFrame {
 		xb_checkBox.addItemListener(itemlistener);
 		kk_checkBox.addItemListener(itemlistener);
 		zk_checkBox.addItemListener(itemlistener);
+		checkBox.addItemListener(itemlistener);
 		
 	}
 	//右击删除信息
@@ -928,5 +951,24 @@ public class Sale_New extends JFrame {
 	});
 }
 	
-	
+    private void lock_method(){
+    	sale_comboBox.setEnabled(false);
+		Prc_comboBox.setEnabled(false);
+		zb_CheckBox.setEnabled(false);
+		xb_checkBox.setEnabled(false);
+		blx_comboBox.setEnabled(false);
+		zk_checkBox.setEnabled(false);
+		zk_spinner.setEnabled(false);
+		kk_checkBox.setEnabled(false);
+		kk_spinner.setEnabled(false);
+		zb_comboBox.setEnabled(false);
+		zk_comboBox.setEnabled(false);
+		kk_comboBox.setEnabled(false);
+		checkBox.setEnabled(false);
+		spinner.setEnabled(false);
+		ramark_textField.setEnabled(false);
+		addButton.setEnabled(false);
+		printButton.setEnabled(true);
+		RemarkButton.setEnabled(true);
+    }
 }

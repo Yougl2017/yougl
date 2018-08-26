@@ -138,6 +138,13 @@ public class Home {
 				
 				SaleMain home=new SaleMain();
 				desktopPane.add(home);
+				home.setMaximumSize(desktopPane.getMaximumSize());
+				try {
+					home.setMaximum(true);
+				} catch (PropertyVetoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
