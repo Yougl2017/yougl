@@ -582,13 +582,13 @@ public class Sale_New extends JFrame {
 			if (checkBox.isSelected()){
 				temp_sum=temp_count; 
 			}else{
-				temp_sum=String.valueOf(String.format("%.2f",Double.parseDouble(temp_count)+Double.parseDouble(temp_mb)*machine.getPrice()+Double.parseDouble(temp_kk)*kk_machine.getPrice()+Double.parseDouble(temp_zk)*zk_machine.getPrice()));
+				temp_sum=String.valueOf(String.format("%.2f",Double.parseDouble(temp_count)+Double.parseDouble(temp_mb)+Double.parseDouble(temp_kk)*kk_machine.getPrice()+Double.parseDouble(temp_zk)*zk_machine.getPrice()));
 				
 			}
 			
 			list_info.add(temp_sum);  //总金额
 			
-			list_info.add(ramark_textField.getText()+String.valueOf( list.get(i+3)));
+			list_info.add(ramark_textField.getText()+String.valueOf(list.get(i+3)));
 			Object[] row=list_info.toArray();
 			tablemodel.addRow(row);
 			
