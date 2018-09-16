@@ -670,11 +670,11 @@ public class Sale_New extends JFrame {
 					                               Double.valueOf(tablemodel.getValueAt(i, 9).toString()),
 	    			                               Double.valueOf(tablemodel.getValueAt(i, 10).toString()),
 	    			                               " ",
-	    			                               Double.valueOf(tablemodel.getValueAt(i, 11).toString()),
-	    			                               Integer.valueOf(tablemodel.getValueAt(i, 12).toString().trim()),
-	    			                               "",
 	    			                               Double.valueOf(tablemodel.getValueAt(i, 13).toString()),
 	    			                               Integer.valueOf(tablemodel.getValueAt(i, 14).toString().trim()),
+	    			                               "",
+	    			                               Double.valueOf(tablemodel.getValueAt(i, 11).toString()),
+	    			                               Integer.valueOf(tablemodel.getValueAt(i, 12).toString().trim()),
 	    			                               Double.valueOf(tablemodel.getValueAt(i, 15).toString().trim()),
 	    			                               tablemodel.getValueAt(i, 16).toString()); 
 	    	boolean rs = Dao.addSaleDetail(saledetail);
