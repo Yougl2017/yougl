@@ -541,7 +541,7 @@ public class Sale_New extends JFrame {
 				temp_mb="0.00";
 			}
 			
-			temp_mb=String.valueOf(String.format("%.2f",Double.valueOf(temp_mb)*Double.valueOf(list.get(i+2).toString())));
+			temp_mb=String.valueOf(String.format("%.2f",Double.valueOf(temp_mb)));
 	
 			
 			list_info.add(temp_mb); // 11磨边
@@ -550,10 +550,10 @@ public class Sale_New extends JFrame {
 			}else{
 				list_info.add(String.valueOf(String.format("%.2f",kk_machine.getPrice())));  //12开口单价
 			}
-			
-			String temp_kk;
+	
+			String temp_kk;//单个玻璃开孔数量
 			if (kk_checkBox.isSelected()){
-				temp_kk=String.valueOf(Integer.valueOf(kk_spinner.getValue().toString())*Integer.valueOf(list.get(i+2).toString()));
+				temp_kk=String.valueOf(Integer.valueOf(kk_spinner.getValue().toString()));
 			}else{
 				temp_kk="0";
 						
@@ -569,9 +569,9 @@ public class Sale_New extends JFrame {
 			}
 			
 			
-			String temp_zk;
+			String temp_zk;//单个玻璃钻孔数量
 			if (zk_checkBox.isSelected()){
-				temp_zk=String.valueOf(Integer.valueOf(zk_spinner.getValue().toString())*Integer.valueOf(list.get(i+2).toString()));
+				temp_zk=String.valueOf(Integer.valueOf(zk_spinner.getValue().toString()));//
 			}else{
 				temp_zk="0";
 						
@@ -582,8 +582,8 @@ public class Sale_New extends JFrame {
 			if (checkBox.isSelected()){
 				temp_sum=temp_count; 
 			}else{
-				temp_sum=String.valueOf(String.format("%.2f",Double.parseDouble(temp_count)+Double.parseDouble(temp_mb)+Double.parseDouble(temp_kk)*kk_machine.getPrice()+Double.parseDouble(temp_zk)*zk_machine.getPrice()));
-				
+				temp_sum=String.valueOf(String.format("%.2f",Double.parseDouble(temp_count)+(Double.parseDouble(temp_mb)*machine.getPrice()+Double.parseDouble(temp_kk)*kk_machine.getPrice()+Double.parseDouble(temp_zk)*zk_machine.getPrice())*Double.parseDouble(list.get(i+2).toString())));
+				//总金额=玻璃金额+单个磨边周长*单价*数量+单位开口*单价*数量+单位钻孔*单价*数量
 			}
 			
 			list_info.add(temp_sum);  //总金额
