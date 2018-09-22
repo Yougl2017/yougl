@@ -479,10 +479,10 @@ public class Sale_New extends JFrame {
 			String temp;
 			double t=Double.parseDouble((String)list.get(i))*Double.parseDouble((String)list.get(i+1))*0.001*0.001;
 			if (t>=0.25){
-				temp=String.valueOf(String.format("%.3f",Double.parseDouble((String)list.get(i))*Double.parseDouble((String)list.get(i+1))*
+				temp=String.valueOf(String.format("%.2f",Double.parseDouble((String)list.get(i))*Double.parseDouble((String)list.get(i+1))*
 						Double.parseDouble((String)list.get(i+2))*0.001*0.001));	
 			}else{
-				temp=String.valueOf(String.format("%.3f",0.25*Double.parseDouble((String)list.get(i+2))));
+				temp=String.valueOf(String.format("%.2f",0.25*Double.parseDouble((String)list.get(i+2))));
 			}
 			
 			 
